@@ -1,0 +1,39 @@
+--- 
+title: "Introducción al Big Data con R"
+subtitle: "Análisis Masivo de datos"
+author: "Alvaro Chirino Gutierrez"
+description: "Apuntes básicos"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+graphics: yes
+github-repo: alvarolimber/big-data
+bibliography: book.bib
+nocite: '@*'
+pandoc_args: ["-Fpandoc-crossref"]
+---
+# Prefacio {-}
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://www.crcpress.com/product/isbn/9781138700109'}
+knitr::include_graphics('images/cover.png', dpi = NA)
+```
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Este documento de [Alvaro Chirino](https://twiiter/alvarochirinog) esta bajo la licencia de <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+## Audiencia  {-}
+
+## Estructura del libro  {-}
+
+El libro inluye 5 capitulos, estos son:
+
+
+## Software y acuerdos {-}
+
+```{r}
+sessionInfo()
+```
+
+## Bases de datos {-}
+
+## Agradecimiento  {-}
