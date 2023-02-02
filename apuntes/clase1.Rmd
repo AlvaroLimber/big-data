@@ -1,0 +1,42 @@
+---
+title: "Análisis Masivo de Datos I"
+author: "MSc. Alvaro Limber Chirino"
+bibliography: ref.bib 
+nocite: '@*'
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
+# Unidades de aprendizaje 
+
+  1. Introducción al Big Data
+  2. Fuentes de datos
+  3. Gramática de datos
+  4. Modelado con software con MapReduce
+  5. Muestreo y filtrado
+
+# Evaluación
+
+Formal
+
+  - 2 Parciales, 30 pts c/u: 60 
+  - Proyecto Dashboard (Shiny/grupal): 30%  
+  - Poster estadístico (grupal): 10% (finales de febrero)
+  
+Extra:
+
+  - **Dialogo Socrático:** Data and Goliath: The Hidden Battles to Collect Your Data and Control Your World (10 Pts.)
+  - **Podcast (grupal):** Estado, limitaciones y desafíos del Big Data en Bolivia (10 pts.)
+  
+# Referencias
+
+<div id="refs"></div>
+
+# Diagnóstico
+
+ - Importar la base de datos de la encuesta de demografía y salud
+ - Explorar las variables de altura, peso para las mujeres de 15 años o más
+ - Construir el Indice de Masa Corporal (IMC)
+ - Estimar e interpretar el modelo lineal:
+ 
+$$IMC_i=\beta_0+\beta_1 Peso_i+\beta_2 Altura_i+\epsilon_i$$ 
