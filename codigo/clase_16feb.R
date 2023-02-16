@@ -49,22 +49,40 @@ for(i in names(bd)){
    print(table(bd[[i]]))
  }
 }
+rr<-1
 for(i in names(bd)){
   if(is.numeric(bd[[i]])){
     print(mean(bd[[i]]) )
   } else {
     print(table(bd[[i]]))
   }
+  rr<-rr*1
 }
 for(i in 1:ncol(bd)){
   print(i)
 }
+##Variabilidad
+var(bd$edad)
+sd(bd$edad)
+range(bd$edad)
+min(bd$edad)
+max(bd$edad)
+#forma
+hist(bd$edad)
+plot(density(bd$edad))
 
+hist(bd$ingreso)
+plot(density(bd$ingreso))
 
+plot(density(rnorm(n)),ylim=c(0,0.8))
+points(density(rnorm(n,sd=0.5)),col="red",type="l")
 
+boxplot(bd$ingreso)
 
-
-
+quantile(bd$ingreso)
+quantile(bd$ingreso,c(0.1,0.9))
+quantile(bd$ingreso,c(0.01,0.99))
+quantile(bd$ingreso,seq(0,1,0.01) )
 
 
 
