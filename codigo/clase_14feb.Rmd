@@ -1,0 +1,140 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## R básico
+
+### Lógica de comandos en R
+
+$$comando(argumento1, argumento2, \ldots)$$
+
+En el fondo un comando es una función:
+
+$$f(x,\ldots)=y, \ldots$$
+
+Notas sobre los comandos:
+
+  - No se pueden resumir
+  - Reconoce mayúsculas y minúsculas, se debe escribir de la forma en la que el comando fue definido
+  - Algunos argumentos son obligatorios y otros opcionales
+  - Hay comandos que no requieren argumentos
+  - Normalmente cada comando tiene su ayuda (help), este accede con el simbolo *?* antes del comando
+  
+```{r}
+ls()#listar los objetos en memoria
+rm()#borras objetos de la memoria
+rm(ls())
+?rm
+rm(list=ls())
+# funciones matemáticas
+exp(10)
+exp(x=10)
+sqrt(9)
+```
+
+### Formatos
+
+  - Texto, cadena, string, caracter.
+  - Números; enteros, decimales
+  - Fechas
+  - Lógicos, 
+  - Factor (Números codificados con etiquetas)
+  - NA, NULL; Valor perdido y valor nulo respectivamente
+  
+  
+```{r}
+"Hola"
+1
+Sys.Date()
+T
+TRUE
+F
+FALSE
+1>10
+NA
+NULL
+```  
+  
+### Asignación (crear objetos)
+
+```{r}
+x1<-"Hola"
+x2=1
+Sys.Date()->x3
+x4<<-T
+
+class(x1)
+class(x2)
+class(x3)
+class(x4)
+
+typeof(x1)
+typeof(x2)
+typeof(x3)
+typeof(x4)
+
+str(x1); str(x2); str(x3); str(x4)
+```
+
+### Estructuras
+
+  + Scalar
+  + Vectores
+  + Matrices
+  + Array
+  
+```{r}
+#scalar
+x1<-2
+# vector
+v1<-c(1,2,3,100) # vector columna px1
+class(v1)
+typeof(v1)
+str(v1)
+v2<-1:1000
+sum(v2)
+seq(0,100,3)
+rep(1,10)
+rep(c(1,3),7)
+runif(100,0,10)
+rnorm(1000)
+rnorm(1000,50,2)
+
+v2>500
+v2%%2
+v2%%5
+
+# matrices
+matrix(1:20,4,5,T)
+matrix(1:10,byrow = T, nrow = 4, ncol = 5)
+# array
+a1<-array(1:250,c(5,5,10))
+```
+  
+### heterogéneos
+
+```{r}
+bd<-data.frame(nombre=c("Juan","Maria","Jesus"),
+               edad=c(15,20,18),
+               sexo=c(1,2,1))
+## indexación
+bd[1, ]
+bd[,1 ]
+bd$sexo
+factor(bd$sexo,c(1,2),c("Hombre","Mujer"))
+bd$sexo2<-factor(bd$sexo,c(1,2),c("Hombre","Mujer"))
+bd
+#listas
+bdl<-list()
+bdl[[1]]<-bd
+bdl[[2]]<-bd
+bdl[[3]]<-v1
+bdl[[4]]<-v2
+bdl[[5]]<-"hola"
+bdl[[6]]<-bdl
+```
+
+
+
