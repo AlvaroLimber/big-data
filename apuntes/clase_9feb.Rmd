@@ -1,0 +1,32 @@
+---
+title: "Mi primer documento en Rmarkdown"
+subtitle: "Big Data"
+author: "Alvaro Chirino"
+date: "Febrero, 2023"
+bibliography: ref.bib
+nocite: "@*"
+output: 
+  word_document:
+    toc: true
+    number_sections: true
+---
+
+# Motivación
+
+Este documento esta basado en @czaja2005designing 
+
+## Objetivo
+
+## Alcances
+
+# Metodología
+
+La función $f(x)$ tiene como dominio a $\Omega$
+
+$$\int_0^{\infty} x^2 \frac{1}{e^x} dx=\alpha$$
+
+![Fuente: Internet](https://miro.medium.com/max/1400/1*UAGU532MbhR5cm3symwWqg.png)
+
+![Fuente: Internet](f1.jpg)
+
+# Referencias

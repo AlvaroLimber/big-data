@@ -1,0 +1,61 @@
+---
+title: "Análisis Masivo de Datos I"
+author: "MSc. Alvaro Limber Chirino"
+bibliography: ref.bib 
+nocite: '@*'
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Unidades de aprendizaje 
+
+  1. Introducción al ecosistema de R
+  2. Introducción al Big Data
+  3. Fuentes de datos
+  4. Gramática de datos
+  5. Muestreo y filtrado
+  6. Modelado con software con MapReduce
+
+# Evaluación
+
+Formal
+
+  - 20% Laboratorio 1: Temas 1 al 3
+  - 20% Laboratorio 2: Tema 4
+  - 20% Laboratorio 3: Temas 5 y 6
+  - 20% Examen teórico: Todos los temas
+  - 20% Proyecto Dashboard (Shiny/grupal)
+  
+Extra:
+  
+  - 10% **Poster estadístico:** 
+    + Visto Bueno hasta el 2 de marzo
+    + Más información: https://islp-bolivia.github.io/
+  - 10% **Podcast (grupal):** Estado, limitaciones y desafíos del Big Data en Bolivia
+    + Entrega el día del examen teórico
+    + Entregables: audio, guion e informe corto en rmd.
+  - 5% **Dialogo Socrático:** Data and Goliath: The Hidden Battles to Collect Your Data and Control Your World
+    + Leer los primeros 5 capítulos
+    + Actividad conjunta a la presentación del dashboard
+
+# Planificación por fecha
+
+```{r,echo=F}
+StartDate <- as.Date("2023-02-01")
+EndDate <- as.Date("2023-06-20") 
+myDays <- seq(StartDate , EndDate, by = "day") 
+excludeDays <- c("lunes","miércoles","viernes", "sábado","domingo")
+myWeekDays <- subset(myDays, !weekdays(myDays) %in% excludeDays)
+library(readxl)
+aux<-read_excel("C:/Users/Alvaro/OneDrive/umsa/contenido_materias/contenido.xlsx",sheet = "EST383-2")
+aux<-cbind(aux,myWeekDays)
+names(aux)[4]<-"Fecha"
+aux<-aux[order(aux$Fecha),]
+############
+knitr::kable(aux,row.names = F)
+```
+  
+# Referencias
+
+<div id="refs"></div>
