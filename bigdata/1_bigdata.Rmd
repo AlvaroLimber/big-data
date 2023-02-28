@@ -1,31 +1,53 @@
 # Introducción al Big Data
 
+## ¿Qué es Big Data?
+
+> "Es un término general que se usa para describir conjuntos de datos **grandes** que se vuelve difícil manejar usando programas estadísticos convencionales", (Snaider, 2012)
+
+> "Capacidad de **recolectar** y **analizar** grandes volumenes de datos para llevar a **descubrimiento** y oportunidades que de otra forma serían imposibles" (Melley)
+
+> "El Big Data tiene 4 V, volúmen, Velocidad, variedad, valor" (IIC)
+
+> "Es el conjunto de tecnologías que ha sido creado para recopilar. gestionar y analizar los datos, su objetivo es procesar" (Fernandez)
+
 ## Conceptos y terminología
   
-  - Datasets: Colección de datos, comparte el mismo conjunto de atributos o propiedades 
-  - Análisis de datos: El análisis de datos es el proceso de examinar datos para encontrar hechos, relaciones, patrones, ideas y/o tendencias. El objetivo general del análisis de datos es apoyar una mejor toma de decisiones.
+  - *Datasets:* Colección de datos, comparte el mismo conjunto de atributos o propiedades. (estructurados, no estructurados, semi estructurados)
+  - **Análisis de datos:** El análisis de datos es el proceso de **examinar** datos para **encontrar** **hechos**, relaciones, patrones, ideas y/o tendencias. El objetivo general del análisis de datos es apoyar una *mejor toma de decisiones*.
 
-### Actividad 1
+### Actividad 1 (10')
 
 Para las siguientes áreas explore e identifique posibles datasets y algunos objetivos para el análisis de datos:
 
-  + Banca
-  + Salud
-  + Educación
-  + Telecomunicaciones
-  + Agricultura
-  + Comercio exterior
+  + Banca (Niko)
+    - Dataset: Transferencias, clientes, tarjetas de crédito/debito y sus transacciones, préstamos (historial), administrativa. 
+    - Análisis: ...
+  + Salud (Alejandro)
+    - Dataset: Nacimientos, muertes, historial médico, clientes/pacientes, farmacia, laboratorios, componentes medicos.
+    - Análisis: ...
+  + Educación (Cristian)
+    - Dataset: Información administrativa, equipamiento, aulas, estudiantes, notas 
+    - Análisis: ...
+  + Telecomunicaciones 
+    - Dataset: Clientes, flujos de información, geo referencia de las personas (tiempo, espacio) 
+    - Análisis
+  + Agricultura (Leo)
+    - Datasets: Encuestas periódicas, SIG, drones, rastreadores, mediciones    
+    - 
+  + Comercio exterior (Nicolas)
+    - Datasets: Importaciones, exportaciones, (productos/personas). 
+    - Análisis: clasificar, destinos, ...
   
-Explore si existen datos abiertos en Bolivia respecto su respuesta.
+Explore si existen **datos abiertos** en Bolivia respecto su respuesta.
 
 ## Analítica de datos
 
-La analítica de datos es un término más amplio, incluye la gestión del ciclo de vida completo de los datos, que abarca la recopilación, limpieza, organización, almacenamiento, análisis. El término incluye el desarrollo de métodos de análisis, técnicas científicas y
+La analítica de datos es un término *más amplio*, incluye la gestión del *ciclo de vida completo de los datos*, que abarca la *recopilación*, *limpieza*, *organización*, almacenamiento, análisis. El término incluye el desarrollo de métodos de análisis, técnicas científicas y
 herramientas. 
 
-+ En entornos orientados a los negocios, los resultados de la analítica de datos pueden reducir los costos operativos y facilitar la toma de decisiones estratégicas.
-+ En las ciencias, la analítica de datos puede ayudar a identificar la causa de un fenómeno para mejorar la precisión de las predicciones.
-• En entornos basados en servicios como las organizaciones del sector público, puede ayudar a fortalecer el enfoque en la prestación de servicios de alta calidad mediante la reducción de costos.
+  + En entornos orientados a los negocios, los resultados de la analítica de datos pueden reducir los costos operativos y facilitar la toma de decisiones estratégicas.
+  + En las ciencias, la analítica de datos puede ayudar a identificar la causa de un fenómeno para mejorar la precisión de las predicciones.
+  + En entornos basados en servicios como las organizaciones del sector público, puede ayudar a fortalecer el enfoque en la prestación de servicios de alta calidad mediante la reducción de costos.
 
 ![](_fig/analitica.PNG)
 
