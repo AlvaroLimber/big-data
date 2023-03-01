@@ -1,53 +1,31 @@
 # Introducción al Big Data
 
-## ¿Qué es Big Data?
-
-> "Es un término general que se usa para describir conjuntos de datos **grandes** que se vuelve difícil manejar usando programas estadísticos convencionales", (Snaider, 2012)
-
-> "Capacidad de **recolectar** y **analizar** grandes volumenes de datos para llevar a **descubrimiento** y oportunidades que de otra forma serían imposibles" (Melley)
-
-> "El Big Data tiene 4 V, volúmen, Velocidad, variedad, valor" (IIC)
-
-> "Es el conjunto de tecnologías que ha sido creado para recopilar. gestionar y analizar los datos, su objetivo es procesar" (Fernandez)
-
 ## Conceptos y terminología
   
-  - *Datasets:* Colección de datos, comparte el mismo conjunto de atributos o propiedades. (estructurados, no estructurados, semi estructurados)
-  - **Análisis de datos:** El análisis de datos es el proceso de **examinar** datos para **encontrar** **hechos**, relaciones, patrones, ideas y/o tendencias. El objetivo general del análisis de datos es apoyar una *mejor toma de decisiones*.
+  - Datasets: Colección de datos, comparte el mismo conjunto de atributos o propiedades 
+  - Análisis de datos: El análisis de datos es el proceso de examinar datos para encontrar hechos, relaciones, patrones, ideas y/o tendencias. El objetivo general del análisis de datos es apoyar una mejor toma de decisiones.
 
-### Actividad 1 (10')
+### Actividad 1
 
 Para las siguientes áreas explore e identifique posibles datasets y algunos objetivos para el análisis de datos:
 
-  + Banca (Niko)
-    - Dataset: Transferencias, clientes, tarjetas de crédito/debito y sus transacciones, préstamos (historial), administrativa. 
-    - Análisis: ...
-  + Salud (Alejandro)
-    - Dataset: Nacimientos, muertes, historial médico, clientes/pacientes, farmacia, laboratorios, componentes medicos.
-    - Análisis: ...
-  + Educación (Cristian)
-    - Dataset: Información administrativa, equipamiento, aulas, estudiantes, notas 
-    - Análisis: ...
-  + Telecomunicaciones 
-    - Dataset: Clientes, flujos de información, geo referencia de las personas (tiempo, espacio) 
-    - Análisis
-  + Agricultura (Leo)
-    - Datasets: Encuestas periódicas, SIG, drones, rastreadores, mediciones    
-    - 
-  + Comercio exterior (Nicolas)
-    - Datasets: Importaciones, exportaciones, (productos/personas). 
-    - Análisis: clasificar, destinos, ...
+  + Banca
+  + Salud
+  + Educación
+  + Telecomunicaciones
+  + Agricultura
+  + Comercio exterior
   
-Explore si existen **datos abiertos** en Bolivia respecto su respuesta.
+Explore si existen datos abiertos en Bolivia respecto su respuesta.
 
 ## Analítica de datos
 
-La analítica de datos es un término *más amplio*, incluye la gestión del *ciclo de vida completo de los datos*, que abarca la *recopilación*, *limpieza*, *organización*, almacenamiento, análisis. El término incluye el desarrollo de métodos de análisis, técnicas científicas y
+La analítica de datos es un término más amplio, incluye la gestión del ciclo de vida completo de los datos, que abarca la recopilación, limpieza, organización, almacenamiento, análisis. El término incluye el desarrollo de métodos de análisis, técnicas científicas y
 herramientas. 
 
-  + En entornos orientados a los negocios, los resultados de la analítica de datos pueden reducir los costos operativos y facilitar la toma de decisiones estratégicas.
-  + En las ciencias, la analítica de datos puede ayudar a identificar la causa de un fenómeno para mejorar la precisión de las predicciones.
-  + En entornos basados en servicios como las organizaciones del sector público, puede ayudar a fortalecer el enfoque en la prestación de servicios de alta calidad mediante la reducción de costos.
++ En entornos orientados a los negocios, los resultados de la analítica de datos pueden reducir los costos operativos y facilitar la toma de decisiones estratégicas.
++ En las ciencias, la analítica de datos puede ayudar a identificar la causa de un fenómeno para mejorar la precisión de las predicciones.
+• En entornos basados en servicios como las organizaciones del sector público, puede ayudar a fortalecer el enfoque en la prestación de servicios de alta calidad mediante la reducción de costos.
 
 ![](_fig/analitica.PNG)
 
@@ -82,10 +60,14 @@ Con base en los sectores de la actividad 1, realice preguntas orientadas a las c
 
 BI permite a una organización obtener información sobre el rendimiento de una empresa mediante el análisis de los datos generados por sus procesos comerciales y sistemas de información. La gerencia puede utilizar los resultados del análisis para dirigir el negocio en un esfuerzo por corregir los problemas detectados o mejorar el desempeño de la organización. BI aplica análisis a grandes cantidades de datos en toda la empresa, que normalmente se ha consolidado en un almacén de datos empresarial para ejecutar consultas analíticas.
 
+![](_fig/bi.PNG)
+
 ## Indicadores clave de rendimiento (KPI: Key Performance Indicators)
 
 Un KPI es una métrica que se puede usar para medir el éxito dentro de un contexto comercial particular.
 Los KPI están vinculados con las metas y objetivos estratégicos generales de una empresa. A menudo se utilizan para identificar problemas de rendimiento empresarial y demostrar el cumplimiento normativo. Por lo tanto, los KPI actúan como puntos de referencia cuantificables para medir un aspecto específico del rendimiento general de una empresa.
+
+![](_fig/key.PNG)
 
 ## Caracterísitcas del Big Data
 
@@ -96,17 +78,16 @@ Las V.
   + Variedad 
   + Veracidad 
   + Valor
+  
+![](_fig/value.PNG)  
 
 ## Tipos de datos
+
+  - Estructurados (tabla)
+  - No estructurados (no tabla)
+  - Semi estructurados (XML, JSON, Sensor)
 
 ## Almacenes de datos
 
   + ETL
   + ELT
-  
-## Inferencia descriptiva en R
-
-### Actividad 3
-
-## Práctica
-

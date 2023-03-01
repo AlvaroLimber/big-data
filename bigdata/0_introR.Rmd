@@ -712,3 +712,99 @@ tendenciaF<-function(x,f){
   media<-sum(x*f)/n
 }
 ```
+
+## Flexdashboard
+
+Es una librería de R que permite crear tableros de datos (dashboard), la salida final esta diseñada para un entorno web (html). 
+
+```{r,eval=F}
+install.packages("flexdashboard")
+library(flexdashboard)
+```
+
+## Shiny 
+
+Shiny es una librería de RStudio orientada a crear aplicaciones web interactivas con R. Una vez instalada existen dos formas de crear una aplicación en Shiny.
+Una alternativa cada vez mas popular es la de crear un documento shiny junto con Markdown.
+
+1. Mediante un solo archivo denominando app.R
+2. Mediante dos archivos separados, el server.R y ui.R
+
+Se recomienda que en cualquiera de las dos alternativas, estos archivos estén contenidos en alguna carpeta. Existen dos partes esenciales al momento de definir una app en Shiny, el UI que es una función que define la interfaz de la aplicación y el Server que define una función con instrucciones sobre cómo construir y reconstruir los objetos R que se mostraran en la UI. La composición básica según las formas de aplicarlas son:
+
+```{r,eval=FALSE}
+# app.R
+library(shiny)
+ui <- fluidPage(
+numericInput(inputId = "n",
+"Sample size", value = 25),
+plotOutput(outputId = "hist")
+)
+server <- function(input, output) {
+output$hist <- renderPlot({
+hist(rnorm(input$n))
+})
+}
+shinyApp(ui = ui, server = server)
+```
+
+```{r,eval=F}
+# ui.R
+
+fluidPage(
+numericInput(inputId = "n",
+"Sample size", value = 25),
+plotOutput(outputId = "hist")
+)
+
+# server.R
+
+function(input, output) {
+output$hist <- renderPlot({
+hist(rnorm(input$n))
+})
+
+```
+
+### UI
+
+Al ser UI la interfaz esta permite la interacción directa con el usuario, a estas se las denominan los entradas $input$, las opciones de *input* son:
+
+* **Botón de acción:** actionButton(inputId, label, icon)
+* **Enlace:** actionLink(inputId, label, icon,)
+* **Check box múltiple:** checkboxGroupInput(inputId,label, choices, selected, inline)
+* **Check box simple:** checkboxInput(inputId, label,value)
+* **Fecha:** dateInput(inputId, label, value,min, max, format, startview,weekstart, language)
+* **Rango de fecha:** dateRangeInput(inputId, label,start, end, min, max, format,startview, weekstart, language,separator)
+* **Cargar archivo:** fileInput(inputId, label, multiple,accept)
+* **Entrada numérica:** numericInput(inputId, label, value,min, max, step)
+* **Tipo contraseña:** passwordInput(inputId, label,value)
+* **Selección tipo botones:** radioButtons(inputId, label,choices, selected, inline)
+* **Seleccionable:** selectInput(inputId, label, choices,selected, multiple, selectize,width, size) 
+* **Slider:** sliderInput(inputId, label, min,max, value, step, round, format,locale, ticks, animate, * width,sep,pre, post)
+* **Enviar** submitButton(text, icon)
+* **Entrada de texto** textInput(inputId, label, value)
+
+Los inputs principalmente tienen dos argumentos el **inputId** que se refiere al identificador del input, este se utiliza en el server, y el **label** que es la etiqueta que aparece en la interfaz visual, estos inputs se asignan a algún objeto (xx<-input()). En el server se tiene acceso al input mediante input$xx.
+
+### Server
+
+En cuanto el server, este usa los distintos inputs para generar las salidas (outputs), las opciones de salidas disponibles son:
+
+* DT::renderDataTable(expr, options,callback, escape, env, quoted)
+* renderImage(expr, env, quoted,deleteFile)
+* renderPlot(expr, width, height, res, …,env, quoted, func)
+* renderPrint(expr, env, quoted, func,width)
+* renderTable(expr,…, env, quoted, func)
+* renderText(expr, env, quoted, func)
+* renderUI(expr, env, quoted, func)
+
+Estos outputs "render" se asignan a un objeto y luego ellos deben ser incluidos dentro del UI con su correspondiente Output:
+
+* dataTableOutput(outputId, icon, …)
+* imageOutput(outputId, width, height,click, dblclick, hover, hoverDelay, inline,hoverDelayType, brush, clickId,hoverId)
+* plotOutput(outputId, width, height, click,dblclick, hover, hoverDelay, inline,hoverDelayType, brush, clickId,hoverId)
+* verbatimTextOutput(outputId)
+* tableOutput(outputId)
+* textOutput(outputId, container, inline)
+* uiOutput(outputId, inline, container, …) y htmlOutput(outputId, inline, container, …)
