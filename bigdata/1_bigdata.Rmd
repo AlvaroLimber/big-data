@@ -34,63 +34,75 @@ herramientas.
 
 ### Análisis descriptivo
 
-El análisis descriptivo se lleva a cabo para responder preguntas sobre eventos que ya han ocurrió. Esta forma de análisis contextualiza los datos para generar información. 
+El análisis descriptivo se lleva a cabo para **responder preguntas sobre eventos que ya han ocurrió**. Esta forma de análisis **contextualiza** los datos para generar información. 
 
   - Estadística descriptiva
   - Inferencia descriptiva
 
 ### Análisis de diagnóstico
 
-El análisis diagnóstico tiene como objetivo determinar la causa de un fenómeno que ocurrió en el pasado. usando preguntas que se enfocan en la razón detrás del evento. El objetivo de este tipo de análisis es determinar qué información está relacionada con el fenómeno para permitir responder preguntas que buscan determinar por qué ha ocurrido algo.
+El análisis diagnóstico tiene como objetivo determinar la **causa** de un fenómeno que **ocurrió en el pasado**. usando preguntas que se enfocan en la razón detrás del evento. El objetivo de este tipo de análisis es determinar **qué información está relacionada con el fenómeno** para permitir responder preguntas que buscan determinar por qué ha ocurrido algo.
 
 ### Análisis predictivo
 
-El análisis predictivo se lleva a cabo en un intento de determinar el resultado de un evento que podría ocurrir en el futuro. Con el análisis predictivo, la información se mejora con significado generar conocimiento que transmita cómo se relaciona esa información. La fuerza y magnitud de las asociaciones forman la base de los modelos que se utilizan para generar futuros predicciones basadas en eventos pasados. Es importante entender que los modelos utilizados para el análisis predictivo tiene dependencias implícitas en la condiciones bajo las cuales el pasado ocurrieron los hechos. Si estas condiciones subyacentes cambian, entonces los modelos que hacen predicciones necesitan ser actualizadas.
+El análisis predictivo se lleva a cabo en un intento de determinar el **resultado de un evento que podría ocurrir en el futuro**. Con el análisis predictivo, la información se mejora con significado generar conocimiento que transmita cómo se relaciona esa información. La fuerza y magnitud de las asociaciones forman la base de los modelos que se utilizan para generar futuros predicciones basadas en eventos pasados. Es importante entender que los **modelos utilizados para el análisis predictivo tiene dependencias implícitas** en la condiciones bajo las cuales el pasado ocurrieron los hechos. Si estas condiciones subyacentes cambian, entonces los modelos que hacen predicciones necesitan ser actualizadas.
+
+  + Inferencia predictiva
+  + Inferencia causal
 
 ### Análisis prescriptivo
 
-El análisis prescriptivo se basa en los resultados del análisis predictivo al prescribir acciones
-que se debe tomar. El enfoque no es solo en qué opción prescrita es mejor seguir. En otras palabras, el análisis prescriptivo proporciona resultados sobre los que se puede razonar. porque incorporan elementos de comprensión situacional. Por lo tanto, este tipo de análisis puede utilizarse para obtener una ventaja o mitigar un riesgo.
+El análisis prescriptivo se **basa en los resultados del análisis predictivo** al prescribir acciones que se deben tomar. El enfoque no es solo en qué opción prescrita es mejor seguir. En otras palabras, el análisis prescriptivo proporciona resultados sobre los que se puede razonar, porque incorporan elementos de comprensión situacional. Por lo tanto, este tipo de análisis puede utilizarse para obtener una ventaja o mitigar un riesgo.
 
-### Actividad 2
+### Ejercicio
 
-Con base en los sectores de la actividad 1, realice preguntas orientadas a las cuatro tipo de analíticas.
+Determinar el tipo de análisis que se requiere en las siguientes solicitudes:
+
+  - El INRA quiere conocer el efecto que tiene la titulación de tierras sobre los ingresos de los productores agropecuarios. **Diagnóstico, Predictivo**
+  - UNICEF quiere conocer el nivel de pobreza que existe en los hogares con NNA y los factores que explican estos resultados. **Descriptivo, diagnóstico**
+  - UNFPA quiere saber el efecto que tuvo sus campañas de violencia que realizó en las universidades públicas del país **Diagnóstico, Predictivo**
+  - KAS quiere conocer los valores democráticos de los jóvenes **descriptivo**
+  - OIM quiere saber que tipos de mensajes de empleo están vinculados a trata y tráfico para monitorear **predictivo**
 
 ## Inteligencia de Negocios (BI)
 
-BI permite a una organización obtener información sobre el rendimiento de una empresa mediante el análisis de los datos generados por sus procesos comerciales y sistemas de información. La gerencia puede utilizar los resultados del análisis para dirigir el negocio en un esfuerzo por corregir los problemas detectados o mejorar el desempeño de la organización. BI aplica análisis a grandes cantidades de datos en toda la empresa, que normalmente se ha consolidado en un almacén de datos empresarial para ejecutar consultas analíticas.
+BI permite a una organización obtener información sobre el rendimiento de una empresa mediante el análisis de los datos generados por sus procesos comerciales y sistemas de información. La gerencia puede utilizar los resultados del análisis para **dirigir el negocio** en un esfuerzo por **corregir los problemas** detectados o mejorar el desempeño de la organización. BI aplica análisis a grandes cantidades de datos en toda la empresa, que normalmente se ha consolidado en un **almacén de datos empresarial** para ejecutar consultas analíticas.
 
 ![](_fig/bi.PNG)
 
 ## Indicadores clave de rendimiento (KPI: Key Performance Indicators)
 
 Un KPI es una métrica que se puede usar para medir el éxito dentro de un contexto comercial particular.
-Los KPI están vinculados con las metas y objetivos estratégicos generales de una empresa. A menudo se utilizan para identificar problemas de rendimiento empresarial y demostrar el cumplimiento normativo. Por lo tanto, los KPI actúan como puntos de referencia cuantificables para medir un aspecto específico del rendimiento general de una empresa.
+Los KPI están vinculados con **las metas** y objetivos estratégicos generales de una empresa. A menudo se utilizan para identificar problemas de **rendimiento empresarial** y demostrar el cumplimiento normativo. Por lo tanto, los KPI actúan como puntos de referencia **cuantificables** para medir un aspecto específico del rendimiento general de una empresa.
 
 ![](_fig/key.PNG)
+
+  - Marcos lógicos de un proyecto
 
 ## Caracterísitcas del Big Data
 
 Las V. 
 
-  + Volumen 
-  + Velocidad: https://www.domo.com/data-never-sleeps#
-  + Variedad 
-  + Veracidad 
-  + Valor
+  + **Volumen:** Tamaño del dataset 
+  + **Velocidad:** Resultados oportunos 
+  + **Variedad:** Estructuradas, no estructuradas
+  + **Veracidad:** calidad y legitimidad de la información
+  + **Valor:** Los resultados deben ser útiles
+  
+https://www.domo.com/data-never-sleeps#  
   
 ![](_fig/value.PNG)  
 
 ## Tipos de datos
 
-  - Estructurados (tabla)
-  - No estructurados (no tabla)
-  - Semi estructurados (XML, JSON, Sensor)
+  - *Estructurados (tabla):* Tiene la forma de una tabla, donde las filas hacen referencia a observaciones y las columnas a atributos/variables.
+  - *No estructurados (no tabla):* Normalmente se refiere a archivos de audio, imágenes, documentos, etc.
+  - *Semi estructurados (XML, JSON, Sensor):* Son objetos que presentan una estructura que puede ser transformada a algo estructurado.
 
 ## Almacenes de datos
 
-  + ETL
-  + ELT
+  + *ETL:* Extraer, transformar, guardar. El resultado es una base de datos transformada.  
+  + *ELT:* Extraer, guardar, transformar: Se cuenta con una base de datos bruta/original, normalmente este enfoque consume más espacio.
 
 ## Calidad de dato y Big Data
 
