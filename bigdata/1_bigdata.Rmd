@@ -104,49 +104,37 @@ https://www.domo.com/data-never-sleeps#
   + *ETL:* Extraer, transformar, guardar. El resultado es una base de datos transformada.  
   + *ELT:* Extraer, guardar, transformar: Se cuenta con una base de datos bruta/original, normalmente este enfoque consume más espacio.
 
-## Calidad de dato y Big Data
-
-La mayoría de los datos en el mundo real son ruidosos, inconsistentes y adolecen de valores perdidos, independientemente de su origen. Incluso si la recopilación de datos es barata, los costos de crear datos de alta calidad a partir de la fuente (limpieza, conservación, estandarización e integración) son considerables. La calidad de los datos se puede caracterizar de múltiples maneras:
-
-* **Precisión:** ¿qué tan precisos son los valores de los atributos en los datos?
-* **Integridad:** ¿están completos los datos?
-* **Consistencia:** ¿Cuán consistentes son los valores en y entre las bases de datos?
-* **Puntualidad:** ¿qué tan oportunos son los datos?
-* **Accesibilidad:** ¿están disponibles todas las variables para el análisis?
-
-Los cientistas de datos tienen décadas de experiencia en la transformación de datos desordenados, ruidosos y no estructurados en un conjunto de datos bien definido, claramente estructurado y probado en calidad. El pre procesamiento es un proceso complejo y que lleva mucho tiempo porque es *práctico*: requiere juicio y no puede automatizarse de manera efectiva. Un flujo de trabajo típico comprende múltiples pasos desde la definición de datos hasta el análisis y termina con el filtrado. Es difícil exagerar el valor del pre-procesamiento para cualquier análisis de datos, pero esto es particularmente cierto en big data. Los datos deben analizarse, estandarizarse, no duplicarse y normalizarse.
-
-* **Análisis (parsing):** Exploración de datos
-* **Estandarización (Standardization):** Identificar variables que requieren transformación y ajustes.
-* **Duplicación:** Consiste en eliminar registros redundantes
-* **Normalización (Normalization):** Es el proceso de garantizar que los campos que se comparan entre archivos sean lo más similares posible en el sentido de que podrían haber sido generados por el mismo proceso. Como mínimo, se deben aplicar las mismas reglas de estandarización a ambos archivos.
-
 ## Captura y preservación
+
 Se refiere al proceso de obtener la información de las distintas fuentes posibles y luego pasar a un proceso de preservación. 
 
-
 ### Fuentes convencionales
-Estas están basadas en la información que se distribuye de forma tradicional mediante bases de datos estructuradas, normalmente estas las distribuyen instituciones con amplios conocimientos en la gestión de bases de datos, para el caso de Bolivia se puede citar algunas: 
 
-* Instituto Nacional de Estadística
-* SNIS
-* UDAPE
-* Geoboliva
-* Ministerios ...
+Estas están basadas en la información que se distribuye de forma tradicional mediante bases de datos estructuradas, normalmente estas las distribuyen instituciones con amplios conocimientos en la gestión de bases de datos, para el caso de Bolivia se puede citar algunas:
+
+  * Instituto Nacional de Estadística
+  * SNIS
+  * UDAPE
+  * Geoboliva
+  * Ministerios ...
+  
+  + Censos
+  + Encuestas
+  + Registros administrativos
 
 ### Datos web y APIs
 
 Se refiere a la captura y uso de la información que se genera en espacios digitales, web, redes sociales, etc.
 
-Referirse al capítulo 3 de scraping web, estos son los mecanismos para extraer información en internet
+Las APIs son puertas de entrada creadas por los administradores de una página, que permiten el acceso a información seleccionada en formatos amigables. 
 
-### Record Linkage
+### Record Linkage (enlaces/llaves)
 
 Se refiere al proceso de concatenar o unir observaciones dispuestas en múltiples bases de datos.
 
   * Puede ser usado para compensar la falta de información
   * Se usa para crear estudios longitudinales
-  * Se pueden armar seudo-paneles
+  * Se pueden armar **seudo-paneles**
 
 Esto permite mejorar la cobertura (append), ampliar las temáticas de estudio (merge). 
 
@@ -157,6 +145,15 @@ Esto permite mejorar la cobertura (append), ampliar las temáticas de estudio (m
   * Match basados en probabilidad: Fellegi–Sunter method
 
 ![](_fig/bd2.PNG)
+
+Ejemplos: 
+
+  + Pseudo-paneles: Cortes(años de nacimiento)
+  + Unidades educativas: RUE
+  + Municipios: Código de 6 dígitos,       - 020101 La Paz
+    - 020105 El Alto
+  + EH: folio, UPM
+  + Clasificadores: Actividades económicas, productos.
 
 ### Bases de datos
 
@@ -169,6 +166,86 @@ Una vez que los datos fueron recolectados y enlazados entre diferentes fuentes, 
   * Bases de datos espaciales
   * Múltiples formatos: https://juliael.carto.com/
 
+
+## Calidad de dato y Big Data
+
+La mayoría de los datos en el mundo real son ruidosos, inconsistentes y adolecen de valores perdidos, independientemente de su origen. Incluso si la recopilación de datos es barata, los costos de crear datos de alta calidad a partir de la fuente (limpieza, conservación, estandarización e integración) son considerables. La calidad de los datos se puede caracterizar de múltiples maneras:
+
+* **Precisión:** ¿qué tan precisos son los valores de los atributos en los datos?
+* **Integridad:** ¿están completos los datos?
+* **Consistencia:** ¿Cuán consistentes son los valores en y entre las bases de datos?
+* **Puntualidad:** ¿qué tan oportunos son los datos?
+* **Accesibilidad:** ¿están disponibles todas las variables para el análisis?
+
+Los cientistas de datos tienen décadas de experiencia en la *transformación de datos desordenados, ruidosos y no estructurados* en un conjunto de *datos bien definido*, claramente estructurado y probado en calidad. 
+
+El pre procesamiento es un *proceso complejo* y que lleva mucho tiempo porque es *práctico*: requiere juicio y no puede *automatizarse de manera efectiva*. Un *flujo de trabajo* típico comprende múltiples pasos desde la definición de datos hasta el análisis y termina con el filtrado. Es difícil exagerar el valor del pre-procesamiento para cualquier análisis de datos, pero esto es particularmente cierto en big data. Los datos deben analizarse, estandarizarse, no duplicarse y normalizarse.
+
+* **Análisis (parsing):** Exploración de datos
+* **Estandarización (Standardization):** Identificar variables que requieren transformación y ajustes.
+* **Duplicación:** Consiste en eliminar registros redundantes
+* **Normalización (Normalization):** Es el proceso de garantizar que los campos que se comparan entre archivos sean lo más similares posible en el sentido de que podrían haber sido generados por el mismo proceso. Como mínimo, se deben aplicar las mismas reglas de estandarización a ambos *archivos*.
+
+## Análisis y modelado
+
+### Machine learning
+
+**¿Machine learning = Statistics?**
+
+Verán que muchos métodos discutidos a lo largo de su formación como estadísticos aparecen dentro del maching learning y que son llamados con otros nombres. 
+
+Al pensar en machine learning debemos asociarlo directamente con *procesos computacionales*, muchos otros conceptos giran al rededor de esta idea como la *inteligencia artificial*. Proceso de machine learning hoy:
+
+  * Permiten manejar autos de forma autónoma
+  * Puede recomendar libros, amistades, música, etc.
+  * Identificar drogas, proteínas y ciertos génes
+  * Se usa para detectar ciertos tipos de cáncer y otras enfermedades médicas.
+  * Ayudan a conocer que estudiantes necesitan un apoyo adicional 
+  * Ayudan a persuadir por que candidato votar en las elecciones. 
+    + Cambridge Analytica.
+
+#### El proceso del machine learning
+  
+  * Entender el *problema* y la *meta*
+  * Formular esto como un *problema de machine learning*
+  * Explorar y preparar los datos
+  * Feature engineeing (Ingeniería del ML)
+  * Selección del método
+  * Evaluación
+  * Deployment
+
+#### Formulación del problema ML
+
+En ML existen 2 grandes categorías
+
+  1. *Aprendizaje supervisado:* Existe una $Y$ que queremos predecir o clasificar a partir de los datos. El fin es el ajuste y la generalización
+    * Clasificación ($Y$ cualitativa)
+    * Predicción ($\hat{Y}$)
+    * Regresión ($Y$ cuantitativa) ($\beta$)
+    
+  2. *Aprendizaje no supervisado:* No existe una variable objetivo, se quiere conocer, entender las asociaciones y patrones naturales en los datos. 
+    * Asociaciones 
+    * Clustering/Agrupamiento 
+    * PCA, MCA 
+    
+![](_fig/bd6.PNG)
+
+### Análisis de texto: Entendiendo lo que la gente escribe
+
+  * Clasificación de documentos
+  * Análisis de sentimientos
+  * Etiquetado de discursos
+  
+El modelado de texto se clasifica en 2:
+
+  + Bolsa de palabras (bag words): No interesa la estructura del texto
+  + Análisis sintáctico: Le interesa estudiar la estructura de la oración (ChatGPT)
+  
+### Networks (Análisis de redes)
+
+![](_fig/bd7.PNG)
+![](_fig/bd8.PNG)
+
 ### Programando con Big Data
 
   * MapReduce: map, shuffle y reduce
@@ -179,58 +256,6 @@ Una vez que los datos fueron recolectados y enlazados entre diferentes fuentes, 
   * Apache Spark
   
 ![](_fig/bd4.PNG)
-
-## Análisis y modelado
-
-### Machine learning
-
-**¿Machine learning = Statistics?**
-
-Verán que muchos métodos discutidos a lo largo de su formación como estadísticos aparecen dentro del maching learning y que son llamados con otros nombres. 
-
-Al pensar en machine learning debemos asociarlo directamente con procesos computacionales, muchos otros conceptos giran al rededor de esta idea como la inteligencia artificial. Proceso de machine learning hoy:
-
-  * Permiten manejar autos de forma autónoma
-  * Puede recomendar libros, amistades, música, etc
-  * Identificar drogas, proteínas y ciertos génes
-  * Se usa para detectar ciertos tipos de cáncer y otras enfermedades médicas
-  * Ayudan a conocer que estudiantes necesitan un apoyo adicional 
-  * Ayudan a persuadir por que candidato votar en las elecciones.
-
-#### El proceso del machine learning
-  
-  * Entender el problema y la meta
-  * Formular esto como un problema de machine learning
-  * Explorar y preparar los datos
-  * Feature engineeing 
-  * Selección del método
-  * Evaluación
-  * Deployment
-
-#### Formulación del problema
-En ML existen 2 grandes categorías
-
-  1. Aprendizaje supervisado: Existe una $Y$ que queremos predecir o clasificar a partir de los datos. El fin es el ajuste y la generalización
-    * Clasificación ($Y$ cualitativa)
-    * Predicción 
-    * Regresión ($Y$ cuantitativa)
-    
-  2. Aprendizaje no supervisado: No existe una variable objetivo, se quiere conocer, entender las asociaciones y patrones naturales en los datos. 
-    * Clustering
-    * PCA, MCA
-    
-![](_fig/bd6.PNG)
-
-### Análisis de texto: Entendiendo lo que la gente escribe
-
-  * Clasificación de documentos
-  * Análisis de sentimientos
-  * Etiquetado de discursos
-  
-### Networks
-
-![](_fig/bd7.PNG)
-![](_fig/bd8.PNG)
 
 ## Inferencia y ética
 
@@ -269,10 +294,10 @@ El desarrollo de una visualización efectiva es un proceso iterativo que general
 
 ![](_fig/bd12.PNG)
 
-* Datos temporales
-* Datos jerárquicos
-* Datos de redes
-* Datos de texto
+  * Datos temporales
+  * Datos jerárquicos
+  * Datos de redes
+  * Datos de texto
 
 ## Ejercicios
 
