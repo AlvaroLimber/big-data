@@ -7,33 +7,41 @@ editor_options:
 
 La definición del scraping web que se toma en este documento proviene de [@Mitchell2015] que expresa:
 
-**
-El Web Scraping es la recolección automática de información de los sitios web. (obviamente no a través de un humano usando un navegador web).
-**
+> El Web Scraping es la **recolección automática** de *información* de los *sitios web*. (obviamente no a través de un humano usando un navegador web).
 
-Un tema dentro del scraping web son las denominadas APIs (Application Programming Interface), *estas son entradas a las páginas web diseñadas por los administradores de la página web*, **por lo mismo no siempre contienen toda la información que se desea**. Aunque las API no son tan *ubicuas* como deberían, puede encontrar API para muchos tipos de información. Interesado en la música? Hay algunas API diferentes que pueden darle canciones, artistas, álbumes e incluso información sobre estilos musicales y artistas relacionados. ¿Necesitas datos deportivos? ESPN proporciona API para información de atletas, puntajes de juegos y más. Google tiene docenas de API en su sección de Desarrolladores para traducciones de idiomas, análisis, geolocalización y más.
+Un tema dentro del scraping web son las denominadas *APIs* (Application Programming Interface), *estas son entradas a las páginas web diseñadas por los administradores de la página web*, **por lo mismo no siempre contienen toda la información que se desea**. Aunque las API no son tan *ubicuas* como deberían, puede encontrar API para muchos tipos de información. Interesado en la música? Hay algunas API diferentes que pueden darle canciones, artistas, álbumes e incluso información sobre estilos musicales y artistas relacionados. ¿Necesitas datos deportivos? ESPN proporciona API para información de atletas, puntajes de juegos y más. Google tiene docenas de API en su sección de Desarrolladores para traducciones de idiomas, análisis, geolocalización y más.
 
-## Pasos para la recopilación de información
+## Pasos para la recopilación de información (flujo de trabajo)
+
 Siguiendo a [@Iacus2015] que establece cinco pasos al momento de decidir recopilar información mediante el scraping web, estos pasos son:
 
-1.  *Asegúrese de saber exactamente qué tipo de información necesita*. Esto puede ser específico (``el producto interno bruto de todos los países de la OCDE durante los últimos 10 años'') o vago (``opinión de la gente sobre el teléfono de la empresa X'', ``colaboración entre miembros del Senado de los Estados Unidos'').
-2. Averigüe si hay fuentes de datos en la Web que puedan proporcionar información directa o indirecta sobre su problema. Si está buscando hechos concretos, esto probablemente sea fácil. Si está interesado en conceptos bastante vagos, esto es más difícil.
+1.  *Asegúrese de saber exactamente qué tipo de información necesita*. Esto puede ser específico (*el producto interno bruto de todos los países de la OCDE durante los últimos 10 años*) o vago (opinión de la gente sobre el teléfono de la empresa X, colaboración entre miembros del Senado de los Estados Unidos).
+2. Averigüe si hay *fuentes de datos en la Web* que puedan proporcionar información *directa o indirecta* sobre su problema. Si está buscando hechos concretos, esto probablemente sea fácil. Si está interesado en conceptos bastante vagos, esto es más difícil.
+3. Desarrolle una teoría del proceso de *generación de datos* cuando busque fuentes potenciales. ¿Cuándo se generaron los datos, cuándo se cargaron en la Web y quién lo hizo? ¿Existen áreas potenciales que no están cubiertas, son consistentes o precisas, y puede identificarlas y corregirlas? (*calidad*)
+4. Equilibrar las *ventajas* y *desventajas* de las *posibles fuentes de datos*. Los aspectos relevantes pueden ser la *disponibilidad* (¡y la *legalidad*!), los *costos* de recolección, la *compatibilidad* de nuevas fuentes con la investigación existente, pero también factores *muy subjetivos* como la *aceptación* de la fuente de datos por parte de otros. También piense en posibles formas de *validar* la *calidad de sus datos.* ¿Existen otras fuentes independientes que brinden información similar para que sean posibles verificaciones cruzadas aleatorias? En caso de datos secundarios, ¿puede identificar la fuente original y verificar los errores de transferencia?
+5. ¡Toma una decisión! Elija la fuente de datos que le parezca más adecuada, *documente* los motivos de la decisión y comience con los preparativos para la *recopilación*. Si es factible, recopile datos de *varias fuentes* para validar las fuentes de datos. Muchos problemas y beneficios de varias *estrategias de recopilación* de datos salen a la luz solo después de la recopilación real.
 
-**La página de inicio de la embajada de un país podría ser una fuente valiosa para la acción de política exterior que a menudo se oculta detrás del telón de la diplomacia. Los tweets pueden contener tendencias de opinión sobre casi todo, las plataformas comerciales pueden informar sobre la satisfacción de los clientes con los productos, las tarifas de alquiler en los sitios web de propiedades pueden contener información sobre el atractivo actual de los barrios de la ciudad ...
-**
+> Actividad (10 min): Buscar artículos de investigación (paper) que usen  el web scraping. Fuente de datos, objetivo, método.
 
-3. Desarrolle una teoría del proceso de generación de datos cuando busque fuentes potenciales. ¿Cuándo se generaron los datos, cuándo se cargaron en la Web y quién lo hizo? ¿Existen áreas potenciales que no están cubiertas, son consistentes o precisas, y puede identificarlas y corregirlas?
-4. Equilibrar las ventajas y desventajas de las posibles fuentes de datos. Los aspectos relevantes pueden ser la disponibilidad (¡y la legalidad!), los costos de recolección, la compatibilidad de nuevas fuentes con la investigación existente, pero también factores muy subjetivos como la aceptación de la fuente de datos por parte de otros. También piense en posibles formas de validar la calidad de sus datos. ¿Existen otras fuentes independientes que brinden información similar para que sean posibles verificaciones cruzadas aleatorias? En caso de datos secundarios, ¿puede identificar la fuente original y verificar los errores de transferencia?
-5. ¡Toma una decisión! Elija la fuente de datos que le parezca más adecuada, documente los motivos de la decisión y comience con los preparativos para la recopilación. Si es factible, recopile datos de varias fuentes para validar las fuentes de datos. Muchos problemas y beneficios de varias estrategias de recopilación de datos salen a la luz solo después de la recopilación real.
+  - Scielo: Activismo feminista en instagram. Argentina
+  - Berkeley: Mercado inmobiliario en EEUU 
+  - Revista Mexicana: Análisis de sentimiento sobre el Covid en twitter, México
+  - U. de país Vasco: Rol de desinformación de influencer españoles en instagram
 
 ## Tecnologías de diseminación, extracción y almacenamiento Web
-Una vez elegida la fuente de datos (página web) y al menos con la intuición de lo que se quiere obtener, el siguiente paso es decidir el mecanismos para el scraping (raspado), esto esta relacionado al tipo de pagina web, ver si esta ofrece una entrada API y conocer sus limitaciones puede ser un punto de partida. Esto se denomina *Technologies for disseminating, extracting, and storing web data Collecting*, en el marco del uso de R la figura \ref{scrap1} muestra las interacciones entre ellas.
+
+Una vez elegida la *fuente de datos* (página web) y al menos con la intuición de lo que se quiere obtener, el siguiente paso es decidir el mecanismos para el scraping (raspado), esto esta relacionado al *tipo de pagina web*, ver si esta ofrece una entrada *API* y conocer sus limitaciones puede ser un punto de partida. Esto se denomina *Technologies for disseminating, extracting, and storing web data Collecting*, en el marco del uso de R la figura \ref{scrap1} muestra las interacciones entre ellas.
 
 ![](_fig/scrap1.png)
 
 *Tecnologías para difundir, extraer y almacenar datos web (considerando el entorno de R)*
 
 ## Librerías en R
+
+Existen dos librerías muy completas para hacer el raspado:
+
+  + **rvest:** Es bastante sencilla de utilizar, aprovecha el código html (código fuente) de la página web y genera dataframes de tablas web. (páginas estáticas)
+  + **selenium:** Es útil cuando las páginas son dinámicas
 
 El siguiente cuadro presenta las librerías en R relacionadas al web Scraping, incluyendo los servicios API, que a la fecha del proyecto alcanza a 761 librerías, esto representa el $5.02$% de las librerías en en R.
 
@@ -44,7 +52,7 @@ library(xtable)
 findPackage(c("API","scrape"),limit.results=-1)
 ```
 
-Actividad 1
+> Actividad 2
 
 Siguiendo los 5 pasos mencionados anteriormente, defina un tema de interés.
 
@@ -54,7 +62,7 @@ Siguiendo los 5 pasos mencionados anteriormente, defina un tema de interés.
   4. Ventajas y desventajas:
   5. Elegir la fuente:
 
-Tiempo: 10 minutos.
+Para la clase del martes
 
 ## Librería rvest
 
