@@ -61,8 +61,18 @@ Siguiendo los 5 pasos mencionados anteriormente, defina un tema de interés.
   3. Calidad de las fuentes:
   4. Ventajas y desventajas:
   5. Elegir la fuente:
+  6. Realizar el raspado web de la información de interés
 
 Para la clase del martes
+
+## HTML
+
+  + ¿Qué es?: *Lenguaje* de texto que se utiliza para *estructurar* y *desplegar* una página *web*
+  + ¿Qué significa?: HyperText Markup Language
+  + Regla/atributos: Funciona en términos de elementos, etiquetas y atributos. Tiene una estructura jerárquica.
+    - Existe una jerarquía 
+    - Funciona en base a *entornos* (encapsulamiento)
+    - Dentro de los entornos existen atributos
 
 ## Librería rvest
 
@@ -71,16 +81,118 @@ Rvest es parte del universo **tidyverse** y esta orientada al scrape de páginas
 ```{r,eval=F}
 #desde CRAN
 install.packages("rvest")
+install.packages("dplyr")
 #la versión en desarrollo desde github
 devtools::install_github("tidyverse/rvest")
 ```
 
 Existe la herramienta selectorgadget disponible en http://selectorgadget.com/, esta permite interactuar con las páginas web para seleccionar partes del documento usando un CSS selector. Las funciones mas importantes dentro de rvest son:
 
-* read_html para cargar la estructura de la página
-* html_nodes para extraer información de la página según el CSS selector
-* html_text para extraer texto de un html_nodes
-* html_table para extraer tablas y ponerlas en data frame
+  * **read_html**: para cargar la estructura de la página
+  * **html_nodes**: para extraer información de la página según el CSS selector
+  * **html_text**: para extraer texto de un html_nodes
+  * **html_table**: para extraer tablas y ponerlas en data frame
+
+## Ejemplo: Worldometers COVID
+
+```{r}
+rm(list = ls())
+library(rvest)
+library(dplyr)
+library(xml2)
+# importación
+www<-"https://www.worldometers.info/coronavirus/"
+bd<-read_html(www)
+class(bd)
+# raspado 
+bd %>% html_nodes(".maincounter-number") %>% html_text()
+
+bd %>% html_nodes(".maincounter-number") %>% html_text2()
+
+bd %>% html_nodes(".maincounter-number") %>% html_nodes("span") %>% html_text2()
+
+bdt<-bd %>% html_table()
+t1<-bdt[[1]]
+t2<-bdt[[2]]
+t3<-bdt[[3]]
+```
+
+## Práctica por 2 puntos extra (MARTES):
+
+- Ejercicio 1:
+
+  1. Definir el tema:
+  2. Identificar fuentes (web):
+  3. Calidad de las fuentes:
+  4. Ventajas y desventajas:
+  5. Elegir la fuente:
+  6. Realizar el raspado web de la información de interés
+
+- Ejercicio 2: Usando la tabla más reciente del Worldometers COVID, mostrar los 5 países con más casos de muerte por millón por continente.
+
+## Recomendaciones raspado web
+
+## Ejemplo: Ketal
+
+```{r}
+rm(list = ls())
+library(dplyr)
+library(rvest)
+library(xml2)
+#################
+www<-"https://www.ketal.com.bo/abarrotes"
+ka<-read_html(www)
+.product-layout
+.price-normal
+#ID PRODUCTO
+aux<-ka %>% html_nodes(".product-layout") 
+aux %>% html_nodes(".stats") %>% html_text2()
+#marca
+marca<-aux %>% html_nodes(".stats") %>% html_text2()
+
+#id
+id_prod<-aux %>% html_nodes(".stat-2") %>% html_text2()
+#precio
+aux %>% html_nodes(".price-normal") %>% html_text2()
+aux %>% html_nodes(".price-new") %>% html_text2()
+aux %>% html_nodes(".price") %>% html_children()
+descuento<-aux %>% html_nodes(".price") %>% html_text2()
+precio<-aux %>% html_nodes(".price-tax") %>% html_text2()
+#descripcion
+descripcion<-aux %>% html_nodes(".description") %>% html_text2()
+aux %>% html_children() %>% html_children()
+#base de datos
+bd0<-data.frame(id_prod,descripcion,marca,descuento,precio)
+```
+
+Página completa de abarrotes
+
+```{r}
+www<-"https://www.ketal.com.bo/abarrotes?sort=p.sort_order&order=ASC&limit=100&page="
+
+bda<-NULL
+for(i in 1:8){
+  print(i)
+  ka<-read_html(paste0(www,i))
+  aux<-ka %>% html_nodes(".product-layout")
+  bd0<-data.frame(
+    id = aux %>% html_nodes(".stat-2") %>% html_text2(),
+    prod = aux %>% html_nodes(".description") %>% html_text2(),
+    marca = aux %>% html_nodes(".stats") %>% html_text2(),
+    precio = aux %>% html_nodes(".price-tax") %>% html_text2(),
+    desc = aux %>% html_nodes(".price") %>% html_text2()
+  )
+  bda<-bda %>% bind_rows(bd0)
+}
+
+```
+
+
+
+
+
+
+
 
 ## Ejemplo: Infocasas, ventas La Paz
 
