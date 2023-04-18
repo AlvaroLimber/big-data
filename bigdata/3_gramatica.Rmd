@@ -1,0 +1,134 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Gramática de datos
+
+  - Recopilación
+  - Importación
+  - Exploración
+    * Diccionario de variables
+    * Niveles de agregación
+    * Descripción univariada 
+    * Identificando relaciones
+    * Aproximación Visual (Visualización)
+  - Filtrado y selección
+    * Filtrado de observaciones
+    * Selección de variables
+    * Pivot, Reshape
+    * Uniendo bases de datos
+  - Muestreo, estimación, error estándar y confiabilidad
+    * Diseño muestral
+    * Estimación
+    * Rendimiento
+  - Transformación
+    * Adecuación de formatos
+    * Limpieza de texto
+    * Creación de variables
+    * Valores atípicos
+    * Valores perdidos
+    
+## Recopilación
+
+  + Depende de la fuente de información de interés
+
+## Importación
+
+Traer una base de datos externa y cargarla en el sistema de interés. En nuestro caso en R.
+
+Hay varias librerías útiles para la importación
+
+```{r}
+rm(list=ls())
+#install.packages("haven")
+library(haven)# stata, spss, matlab, 
+library(readxl)# excel 
+#importar la base de datos de las elecciones
+getwd()
+setwd("/cloud/project/apuntes/data")
+#dir()
+bd20<-read.csv("en2020.csv",sep="|")
+save(bd20,file="bd20.RData")
+View(bd20)
+```
+
+## Exploración
+
+Ejemplo, en la base de datos de las elecciones 2020
+
+  + Unidad de investigación (fila): Encontrar un ID, key.: Mesas electorales
+  + Variables: Geográficas, identificación del recinto y la mesa, finalmente variables vinculadas a los votos por partido político.
+
+```{r}
+unique(bd20$Nombre.DEPARTAMENTO)
+length(unique(bd20$Codigo.MESA))
+names(bd20)
+```
+
+### Diccionario de variables
+
+Es un listado de las variables y sus características de formato y alguna información adicional. Lo mas importante es saber que variables son cualitativas y cuales cuantitativas.
+
+```{r}
+str(bd20)#estrucutra 
+str(bd20$VALIDOS)
+```
+
+### Niveles de agregación
+
+La base de datos puede tener una unidad de investigación **elemental**, pero, puede tener también información de unidades de interés mas grandes, es decir; que agregen a los unidades elementales.
+
+> Problema: Construir una base de datos a nivel de los recintos, con la información de los votos para el MAS, CC, VALIDOS.
+
+```{r}
+library(dplyr)# Gramática de datos SQL
+# %>% operador pipe ctr+alt+m
+bdre20<-bd20 %>% group_by(Codigo.RECINTO,Nombre.RECINTO) %>% summarise(sum(CC),sum(MAS.IPSP),sum(VALIDOS))
+View(bdre20)
+```
+
+### Descripción univariada 
+
+El objetivo es conocer estadísticas básicas de cada variable.
+
+  + Cualitativas: Conteo, %
+  + Cuantitativas: tendencia central, variabilidad, medidas de forma, densidad. 
+
+### Identificando relaciones
+
+El objetivo es tener una medida estadística que nos indique algo sobre la relación existente entre 2 o más variables.
+
+  - Cuali vs cuali
+
+```{r}
+library(haven)
+# Área pobreza
+table(eh21p$area,eh21p$p0)
+chisq.test(table(eh21p$area,eh21p$p0))
+```
+
+Test de independencia $\chi^2$
+
+  - H0: Independencia
+
+Cuanti vs cuanti: Lo más útil y práctico es hacer una **correlación**, sin embargo, lo que se estudia es una relación lineal, además son relaciones *casuales*
+
+### Aproximación Visual (Visualización)
+
+
+## Filtrado y selección
+### Filtrado de observaciones
+### Selección de variables
+### Pivot, Reshape
+### Uniendo bases de datos
+## Muestreo, estimación, error estándar y confiabilidad
+### Diseño muestral
+### Estimación
+### Rendimiento
+## Transformación
+### Adecuación de formatos
+### Limpieza de texto
+### Creación de variables
+### Valores atípicos
+### Valores perdidos
