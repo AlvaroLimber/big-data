@@ -41,16 +41,47 @@ Hay varias librerías útiles para la importación
 
 ```{r}
 rm(list=ls())
-#install.packages("haven")
 library(haven)# stata, spss, matlab, 
+library(labelled) # permite trabajar con las etiquetas de bases de datos importadaS de stata o SPSS
 library(readxl)# excel 
+##################################
 #importar la base de datos de las elecciones
+bd20<-read.csv("C:/Users/PC18/Downloads/en2020.csv", sep="|")
 getwd()
-setwd("/cloud/project/apuntes/data")
-#dir()
-bd20<-read.csv("en2020.csv",sep="|")
-save(bd20,file="bd20.RData")
-View(bd20)
+#
+setwd("C:/Users/PC18/Documents/GitHub/big-data/data")#cambiar el directorio de trabajo
+save(bd20,file="data/bd20.RData")#exportar a R
+#cargar la base
+rm(list = ls())
+load("data/bd20.RData")
+##censo
+s1<-getwd()
+setwd("C:/Users/PC18/Downloads/census-20230418T183736Z-001/census")
+dir()
+cs12d_8<-read_dta("DBdiscapacidad2012vf_8.dta")
+cs12d_9<-read_dta("DBdiscapacidad2012vf_9.dta")
+cs12m_8<-read_dta("DBmortalidad2012vf_8.dta")
+cs12m_9<-read_dta("DBmortalidad2012vf_9.dta")
+cs12p_8<-read_dta("DBpersonas2012vf_8.dta")
+cs12p_9<-read_dta("DBpersonas2012vf_9.dta")
+cs12v_8<-read_dta("DBvivienda2012vf_8.dta")
+cs12v_9<-read_dta("DBvivienda2012vf_9.dta")
+setwd(s1)
+getwd()
+save(cs12d_8,cs12d_9,cs12m_8,cs12m_9,cs12p_8,cs12p_9,cs12v_8,cs12v_9, file = "data/cs12.RData")
+# Actividad: Realizar la importación de todas las bases de las encuestas a hogares y generar el RData correspondiente. (3:45)
+setwd("C:/Users/PC18/Downloads/eh2021")
+dir()
+eh21de<-read_sav("EH2021_Defunciones.sav")
+eh21di<-read_sav("EH2021_Discriminacion.sav")
+eh21eq<-read_sav("EH2021_Equipamiento.sav")
+eh21ga<-read_sav("EH2021_Gastos Alimentarios.sav")
+eh21gn<-read_sav("EH2021_Gastos no Alimentarios.sav")
+eh21p<-read_sav("EH2021_Persona.sav")
+eh21sa<-read_sav("EH2021_Seguridad Alimentaria.sav")
+eh21v<-read_sav("EH2021_Vivienda.sav")
+setwd(s1)
+save(eh21de,eh21di,eh21eq,eh21ga,eh21gn,eh21p,eh21sa,eh21v,file = "data/eh21.RData")
 ```
 
 ## Exploración
@@ -108,7 +139,7 @@ table(eh21p$area,eh21p$p0)
 chisq.test(table(eh21p$area,eh21p$p0))
 ```
 
-Test de independencia $\chi^2$
+Test de independencia $/chi^2$
 
   - H0: Independencia
 
