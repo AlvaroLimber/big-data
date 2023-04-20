@@ -86,24 +86,89 @@ save(eh21de,eh21di,eh21eq,eh21ga,eh21gn,eh21p,eh21sa,eh21v,file = "data/eh21.RDa
 
 ## Exploración
 
-Ejemplo, en la base de datos de las elecciones 2020
+Meta data de la base de datos electoral.
 
-  + Unidad de investigación (fila): Encontrar un ID, key.: Mesas electorales
-  + Variables: Geográficas, identificación del recinto y la mesa, finalmente variables vinculadas a los votos por partido político.
+  - **Población Objetivo:** Mesas electorales de las elecciones generales 2020
+  - **Unidad de análisis:** Mesa electoral
+  - **Unidad de información:** Acta electoral de la mesa
+  - **Unidades agregadas:** Recinto, municipio, provincia, departamento
+  - **Cobertura espacial:** Toda Bolivia
+  - **Cobertura temporal:** 2020
+  - **Cobertura temática:** Información geográfica, preferencias electorales
+  - **Diseño estadístico:** No tiene, es un registro administrativo.
+  
+Meta data de la base de datos del censo:
+
+  - **Población Objetivo:** Población y viviendas del 2012 en los departamentos Beni y Pando. 
+  - **Unidad de análisis:** Personas, Viviendas
+  - **Unidad de información:** Personas
+  - **Unidades agregadas:** Viviendas, municipios, provincias y departamentos. 
+  - **Cobertura espacial:** Departamentos de Beni y Pando
+  - **Cobertura temporal:** 2012
+  - **Cobertura temática:** Información geográfica, características de la vivienda, emigración internacional, mortalidad.
+  - **Diseño estadístico:** Censo
+  
+Meta data de la base de datos de la encuesta a hogares 2021 (tarea).
+
+  - **Población Objetivo:** 
+  - **Unidad de análisis:** 
+  - **Unidad de información:** 
+  - **Unidad de agregadas:** 
+  - **Cobertura espacial:** 
+  - **Cobertura temporal:** 
+  - **Cobertura temática:** 
+  - **Diseño estadístico:**   
 
 ```{r}
-unique(bd20$Nombre.DEPARTAMENTO)
-length(unique(bd20$Codigo.MESA))
-names(bd20)
+rm(list = ls())
+load("data/bd20.RData")
+load("data/cs12.RData")
 ```
 
 ### Diccionario de variables
 
 Es un listado de las variables y sus características de formato y alguna información adicional. Lo mas importante es saber que variables son cualitativas y cuales cuantitativas.
 
+Cuando existen muchas bases de datos dentro de nuestro dataset, o cuando tenemos varias unidades agregadas es importante identificar la variable de identificación única de las unidades de análisis ($KEY$).
+
+  - Electoral, mesa: Codigo.MESA
+  - Censo, persona, vivienda: , vivienda es la variable llave
+  
 ```{r}
+names(bd20)
+length(unique(bd20$Codigo.MESA))
+length(unique(bd20$Codigo.RECINTO))
+length(unique(bd20$Nombre.RECINTO))
+length(unique(bd20$Codigo.DEPARTAMENTO))
+
+length(unique(cs12v_8$llave))
+length(unique(cs12p_8$llave))
+length(unique(cs12p_8$iviv))
+length(unique(cs12p_8$iind))
+
 str(bd20)#estrucutra 
 str(bd20$VALIDOS)
+class(bd20$VALIDOS)
+class(bd20$Codigo.DEPARTAMENTO)
+class(bd20$Nombre.DEPARTAMENTO)
+class(bd20$Codigo.DEPARTAMENTO)
+
+#STATA, SPSS
+str(cs12p_9)
+str(cs12p_9$p23)
+aux<-attributes(cs12p_9)
+aux$names
+library(labelled)
+var_label(cs12p_9) # etiqueta de la variable (descripción)
+val_labels(cs12p_9$p23) # Etiquetas de variables codificadas
+
+to_factor(cs12p_9$p23)
+cs12p_9$p23
+bd_axu<-to_factor(cs12p_8)
+#tarea para la siguiente clase, armar bases de datos que contenga el diccionario de las bases de datos del censo 
+
+
+
 ```
 
 ### Niveles de agregación
