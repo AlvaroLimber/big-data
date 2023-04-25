@@ -166,22 +166,80 @@ to_factor(cs12p_9$p23)
 cs12p_9$p23
 bd_axu<-to_factor(cs12p_8)
 #tarea para la siguiente clase, armar bases de datos que contenga el diccionario de las bases de datos del censo 
+```
 
+### Nombre de las variables
 
+```{r}
+load("data/bd20.RData")
+names(bd20)
+```
 
+Recomendaciones para los nombres de variables:
+
+  - Usar solo mayúsculas o minúsculas
+  - Evitar los espacios
+  - Evitar iniciar con números, o que el nombre de la variable sea un número
+  - Evitar símbolos y caracteres, evitar los acentos
+  - El nombre de la variable debiera ser corto (3 a 10) e informativo
+  
+Por ejemplo: para la variable edad:
+
+  - ¿Cuál es su edad?
+  - edad
+  - edad2000
+  - age
+
+```{r}
+names(bd20)
+names(bd20)<-tolower(names(bd20))
+#toupper(names(bd20))
+library(dplyr)#gramática de dato
+
+bd20 %>% rename(ipais=codigo.pais,
+                dpais=nombre.pais)
+
+bd20<-bd20 %>% rename(ipais=codigo.pais,
+                dpais=nombre.pais)
+names(bd20)
+```
+
+### Reportes básicos
+
+```{r}
+sum(bd20$cc)
+max(bd20$cc)
+min(bd20$cc)
+mean(bd20$cc)
+
+bd20 %>% summarise(Total=sum(cc),
+                   Minimo=min(cc),
+                   Maximo=max(cc),
+                   Promedio=mean(cc))
+
+bd20 %>% summarise_at(vars(adn:pan.bol),sum)
+bd20 %>% summarise_at(vars(adn:pan.bol), 
+                      quantile, probs=c(0.05,0.95))
 ```
 
 ### Niveles de agregación
 
-La base de datos puede tener una unidad de investigación **elemental**, pero, puede tener también información de unidades de interés mas grandes, es decir; que agregen a los unidades elementales.
+La base de datos puede tener una unidad de investigación **elemental**, pero, puede tener también información de unidades de interés mas grandes, es decir; que agreguen a los unidades elementales.
 
 > Problema: Construir una base de datos a nivel de los recintos, con la información de los votos para el MAS, CC, VALIDOS.
 
 ```{r}
-library(dplyr)# Gramática de datos SQL
-# %>% operador pipe ctr+alt+m
-bdre20<-bd20 %>% group_by(Codigo.RECINTO,Nombre.RECINTO) %>% summarise(sum(CC),sum(MAS.IPSP),sum(VALIDOS))
-View(bdre20)
+#departamento
+t1<-bd20 %>% group_by(depto=nombre.departamento) %>% summarise(cc=sum(cc),mas=sum(mas.ipsp),val=sum(validos))
+#latex
+library(xtable)
+xtable(t1)
+#############
+t2<-bd20 %>% group_by(depto=nombre.departamento,
+         prov=nombre.provincia) %>% summarise(cc=sum(cc),mas=sum(mas.ipsp),val=sum(validos))
+t2
+
+t3<-bd20 %>% group_by_at(vars(codigo.departamento:nombre.recinto)) %>% summarise(cc=sum(cc),mas=sum(mas.ipsp),val=sum(validos))
 ```
 
 ### Descripción univariada 
@@ -189,7 +247,67 @@ View(bdre20)
 El objetivo es conocer estadísticas básicas de cada variable.
 
   + Cualitativas: Conteo, %
-  + Cuantitativas: tendencia central, variabilidad, medidas de forma, densidad. 
+  + Cuantitativas: tendencia central, variabilidad, medidas de forma, densidad.
+
+Ejemplo: Obtener la cantidad de mesas y recintos electorales por departamento.
+  
+```{r}
+t4<-bd20 %>% group_by(nombre.departamento) %>% count() 
+t4
+
+bd20 %>% group_by(nombre.departamento) %>%  summarise(mesas=n(),val=sum(validos))
+#recintos
+t3%>% group_by(nombre.departamento) %>% count() 
+
+bd20 %>% group_by(nombre.departamento,codigo.recinto) %>% summarise(sum(cc)) %>% group_by(nombre.departamento) %>% count()
+
+#cuanti
+
+bd20 %>% summarise(mean(mas.ipsp),sd(mas.ipsp), max(mas.ipsp))
+#mean, median, sd, var, min, max, quantile
+
+cv<-function(x){
+  y<-sd(x)/mean(x)
+  return(y)
+}
+bd20 %>% summarise(cv(mas.ipsp),cv(cc))
+
+```
+
+### Aproximación Visual (Visualización)
+
+Al hacer un gráfico se debe definir 3 aspectos:
+
+  1. Información (dataset)
+  2. Estética (componentes)
+  3. Geometría 
+
+```{r}
+library(ggplot2) # gramática de gráficos
+#univariantes
+# + +
+ggplot(bd20,aes(cc))+geom_boxplot()
+ggplot(bd20,aes(cc))+geom_density()
+ggplot(bd20,aes(mas.ipsp))+geom_density()
+ggplot(bd20,aes(cc))+geom_histogram()
+
+ggplot(bd20,aes(nombre.departamento))+geom_bar()
+# CUANTI VS CUANTI
+ggplot(bd20,aes(cc,mas.ipsp)) + geom_point()
+
+ggplot(t3,aes(cc,mas)) + geom_point()
+
+ggplot(t3,aes(cc,mas)) + geom_point(col="darkred")
+
+ggplot(t3,aes(cc,mas,col=nombre.departamento)) + geom_point()
+
+ggplot(t3,aes(cc,mas,
+              col=nombre.departamento,
+              size=mas)) + geom_point()
+
+plot(t3$cc,t3$mas)
+```
+
 
 ### Identificando relaciones
 
@@ -209,9 +327,6 @@ Test de independencia $/chi^2$
   - H0: Independencia
 
 Cuanti vs cuanti: Lo más útil y práctico es hacer una **correlación**, sin embargo, lo que se estudia es una relación lineal, además son relaciones *casuales*
-
-### Aproximación Visual (Visualización)
-
 
 ## Filtrado y selección
 ### Filtrado de observaciones
