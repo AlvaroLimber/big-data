@@ -1,0 +1,104 @@
+---
+title: "Laboratorio1_Sergio_Colque"
+output: html_document
+date: "2023-04-13"
+editor_options: 
+  chunk_output_type: console
+---
+
+# Pregunta 1 
+$$\sum_{i=10}^{40}{\left(\frac{2^i}{i}+\frac{3^i}{i^2} \right)}$$
+```{r}
+matrix(c(runif(20,0,10)),4,5)
+```
+
+$$\sum_{i=1}^{20}{\sum_{j=2}^5{\frac{i^3}{2+ij}}}$$
+```{r}
+ej3<-function(i,j){
+
+  for(i in 1:20){
+    for(j in 2:5)
+      r<-(i^3)/(2+i*j)
+  }
+  return(r)
+  ej(3,4)
+}
+
+ej4<-function(x){
+  n<-length(x)
+  c_var<-sd(x)/mean(x)
+  c_asimP<-1/n*(sum(x-mean(x))^3)
+  x<-sort(x)
+  if(n%%2==0){
+  me<-(x[n/2]+x[n/2+1])/2
+  } else {
+  me<-x[ceiling(n/2)]
+  }
+  c_asimF<-(3*(mean(x)-me))/sd(x)
+  aux<-list(c_var,c_asimP,c_asimF)
+  return(aux)
+}
+v<-c(1:10)
+ej4(v)
+
+```
+
+### comentario: la sumatorias están incorrectas 3/5
+
+#Pregunta 2
+```{r}
+chi_p<-function(){
+  
+}
+M <- as.table(rbind(c(762, 327, 468), c(484, 239, 477)))
+dimnames(M) <- list(gender = c("F", "M"),
+                    party = c("Democrat","Independent", "Republican"))
+M
+chisq.test(M)
+
+
+```
+
+### Comentario: Incompleto 0/5
+
+#Pregunta 3
+```{r}
+#install.packages("rvest")
+#install.packages("dplyr")
+#install.packages("xml2")
+#install.packages("knitr")
+library(rvest)
+library(dplyr)
+library(xml2)
+library(knitr)
+www <- "https://www.worldometers.info/coronavirus/#main_table"
+bd <- read_html(www)
+bdt <- bd %>% html_table()
+t1 <- bdt[[1]]
+t2 <- bdt[[2]]
+t3 <- bdt[[3]]
+```
+#Europa
+```{r}
+t_europa %>% arrange(desc(t_europa$`Deaths/1M pop`)) %>% select("Country,Other", "Deaths/1M pop") %>% kable()
+t_actual <- t1d[-c(1:8, 240:247),] %>% select("Country,Other", "Deaths/1M pop", "Continent") %>% filter(Continent == "North America") 
+
+t_namer <- t_actual
+t_namer$`Deaths/1M pop` <- as.numeric(gsub(",", "", t_namer$`Deaths/1M pop`))
+```
+#Sur America
+
+```{r}
+t_samer %>% arrange(desc(t_samer$`Deaths/1M pop`)) %>% select("Country,Other", "Deaths/1M pop") %>% kable()
+
+t_actual <- t1d[-c(1:8, 240:247),] %>% select("Country,Other", "Deaths/1M pop", "Continent") %>% filter(Continent == "Africa") 
+
+t_afri <- t_actual
+t_afri$`Deaths/1M pop` <- as.numeric(gsub(",", "", t_afri$`Deaths/1M pop`))
+```
+
+### comentario: incompleto 0/5
+
+### Total
+
+3+0+0+0=3/20
