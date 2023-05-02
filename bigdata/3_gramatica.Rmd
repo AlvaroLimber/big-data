@@ -308,6 +308,125 @@ ggplot(t3,aes(cc,mas,
 plot(t3$cc,t3$mas)
 ```
 
+## Filtrado y selección
+
+### Filtrado de observaciones
+
+El filtrado se refiere a seleccionar casos (filas) que cumplen una determinada condición. En la librería dplyr el comando filter se utiliza para esto.
+
+Para las condiciones en R se utilizan los operadores lógicos:
+
+  + Igualdad "=="
+  + Distinto "!="
+  + ó lógico "|"
+  + y lógico "&" 
+  + Negación "!"
+  + Desigualdad "<,>,>=,<="
+  + (Which) Múltiples condiciones (|) "%in%"
+  
+Crear bases de datos que contengan:
+
+  - Bases de datos de las mesas por departamento
+  - Bases de datos de los departamentos distintos al eje central
+  - BD del municipio de El Alto
+  - BD del municipio donde el MAS obtenga en términos relativos la mayor votación
+  - BD del municipio donde el CC obtenga en términos relativos la mayor votación
+  - BD del municipio donde el Creemos obtenga en términos relativos la mayor votación
+  - BD del municipio con mayor similitud a los resultados nacionales (en términos relativos)
+  
+```{r}
+rm(list=ls())
+library(dplyr)
+load("data/bd20.RData")
+names(bd20)<-tolower(names(bd20))
+names(bd20)
+
+table(bd20$nombre.departamento)
+table(bd20$codigo.departamento)
+# BENI
+bd_bn<-bd20 %>% filter(nombre.departamento=="BENI")
+#- Bases de datos de las mesas por departamento
+aux<-unique(bd20$nombre.departamento)
+bd_d<-list()
+r<-1
+for(i in aux){
+  bd_d[[r]]<-bd20 %>% filter(nombre.departamento==i)
+  r<-r+1
+}
+# - Bases de datos de los departamentos distintos al eje central
+aux[c(2,3,7)]
+
+bd20 %>% 
+filter(!(nombre.departamento %in% aux[c(2,3,7)])) %>% group_by(nombre.departamento) %>% count()
+
+bd1<-bd20 %>% 
+filter(!(nombre.departamento %in% aux[c(2,3,7)])) 
+# - BD del municipio de El Alto
+aux1<-sort(unique(bd20$nombre.municipio))
+bdea<-bd20 %>% filter(codigo.municipio=="20105")
+bdea2<-bd20 %>% filter(nombre.municipio==aux1[95])
+
+names(bd20)
+7
+bdmun<-bd20 %>% group_by(codigo.municipio,nombre.municipio) %>% summarise_at(vars(adn:validos),sum)
+
+maxmas<-max(bdmun$mas.ipsp/bdmun$validos)
+pmas<-bdmun$mas.ipsp/bdmun$validos==maxmas
+bdmun$codigo.municipio[pmas]
+bdmun$nombre.municipio[pmas]
+
+maxcc<-max(bdmun$cc/bdmun$validos)
+pcc<-bdmun$cc/bdmun$validos==maxcc
+bdmun$codigo.municipio[pcc]
+bdmun$nombre.municipio[pcc]
+
+maxcre<-max(bdmun$creemos/bdmun$validos)
+pcre<-bdmun$creemos/bdmun$validos==maxcre
+bdmun$codigo.municipio[pcre]
+bdmun$nombre.municipio[pcre]
+#  - BD del municipio donde el MAS obtenga en términos relativos la mayor votación
+bd20 %>% filter(codigo.municipio=="31304")
+#  - BD del municipio donde el CC obtenga en términos relativos la mayor votación
+bd20 %>% filter(codigo.municipio=="50101")
+#  - BD del municipio donde el Creemos obtenga en términos relativos la mayor votación
+bd20 %>% filter(codigo.municipio=="70601")
+
+BD del municipio con mayor similitud a los resultados nacionales (en términos relativos)
+```
+
+### Selección de variables
+
+Simplemente se refiere a la selección de variables, este proceso se recomienda realizarlo antes del modelo, ya que libera memoria y optimiza los tiempos de procesamiento, además, nos permite enfocarnos en las variables de interés. En la librería dplyr el comando es select.
+
+```{r}
+bd20 %>% select(codigo.mesa,validos)
+bd20 %>% select(-codigo.pais)
+bd20 %>% select(-codigo.pais, -codigo.departamento)
+bd20 %>% select_at(vars(adn:validos))
+
+bd20 %>% select(starts_with("nombre")) %>% names()
+bd20 %>% select(starts_with("codigo")) %>% names()
+bd20 %>% select(!starts_with("codigo")) %>% names()
+bd20 %>% select(contains(".")) %>% names()
+bd20 %>% select(!contains(".")) %>% names()
+```
+
+Extra para ordenar la base de datos se utiliza el comando arrange.
+
+```{r}
+bdmun %>% head()
+bdmun %>% arrange(nombre.municipio) %>% head()
+bdmun %>% arrange(desc(nombre.municipio)) %>% head()
+
+bdmun %>% arrange(cc,mas.ipsp) %>% select(cc,mas.ipsp) %>% head()
+```
+
+
+
+### Pivot, Reshape
+### Uniendo bases de datos
+
+
 
 ### Identificando relaciones
 
@@ -328,11 +447,7 @@ Test de independencia $/chi^2$
 
 Cuanti vs cuanti: Lo más útil y práctico es hacer una **correlación**, sin embargo, lo que se estudia es una relación lineal, además son relaciones *casuales*
 
-## Filtrado y selección
-### Filtrado de observaciones
-### Selección de variables
-### Pivot, Reshape
-### Uniendo bases de datos
+
 ## Muestreo, estimación, error estándar y confiabilidad
 ### Diseño muestral
 ### Estimación
