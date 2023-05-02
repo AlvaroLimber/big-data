@@ -1,0 +1,164 @@
+---
+title: "**Primer Laboratorio**"
+subtitle: "Análisis Masivo de Datos"
+author: "MSc. Alvaro Chirino Gutierrez"
+data: "13 de abril 2023"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+  + Las respuestas deben estar en un solo documento, este puede ser un archivo .R (script) o rmd (rmarkdown)
+  + Cuando termine envíe su respuesta al correo achirinog@fcpn.edu.bo
+  + El examen termina a las 15:40
+
+# Pregunta 1 (5 pts)
+
+Escribir el código en R para los siguientes casos:
+
+  * (1pt) 
+
+$$\sum_{i=10}^{40}{\left(\frac{2^i}{i}+\frac{3^i}{i^2} \right)}$$
+
+  * (1pt) Crear una matriz de $4*5$ que contengan valores aleatorios de una uniforme con $a=0, b=10$
+  * (1pt) Calcular     
+
+$$\sum_{i=1}^{20}{\sum_{j=2}^5{\frac{i^3}{2+ij}}}$$
+  * (2pts) Crear una función que dado un vector numérico devuelva el coeficiente de variación y el coeficiente de asimetría de Pearson y Fisher.
+
+## Solución
+
+```{r}
+#(1pt) $$\sum_{i=10}^{40}{\left(\frac{2^i}{i}+\frac{3^i}{i^2} \right)}$$
+i<-10:40
+sum((2^i)/i+(3^i)/(i^2))
+
+# (1pt) Crear una matriz de $4*5$ que contengan valores aleatorios de una uniforme con $a=0, b=10$
+
+matrix(runif(20,0,10),4,5)
+
+# (1pt) $$\sum_{i=1}^{20}{\sum_{j=2}^5{\frac{i^3}{2+ij}}}$$
+ss<-0
+for(i in 1:20){
+  for(j in 2:5){
+    aux<-(i^3)/(2+i*j)
+    ss<-ss+aux
+  }
+}
+ss
+
+# (2pts) Crear una función que dado un vector numérico devuelva el coeficiente de variación y el coeficiente de asimetría de Pearson y Fisher.
+fx<-function(x){
+  n<-length(x)
+  cv<-sd(x)/mean(x)
+  #pearson
+  p<-(3*(mean(x)-median(x)))/sd(x)
+  #fisher
+  f<-(sum((x-mean(x))^3)/(n-1))/sd(x)^3
+  return(c(cv,p,f))
+}
+x<-rnorm(1000)
+fx(x)
+fx(1:10)
+```
+
+# Pregunta 2 (5 pts)
+
+ * Desarrolle una función en R que realice la prueba $\chi^2$ de Pearson, siguiendo a https://es.wikipedia.org/wiki/Prueba_%CF%87%C2%B2_de_Pearson
+  * Verifique el resultado de la función creada con el comando  chisq.test de R para la tabla: 
+  
+```{r,echo=FALSE}
+M <- as.table(rbind(c(762, 327, 468), c(484, 239, 477)))
+dimnames(M) <- list(gender = c("F", "M"),
+                    party = c("Democrat","Independent", "Republican"))
+M
+```
+
+## Solución
+
+```{r}
+chi2<-function(M){
+  pf<-apply(M, 1, sum)
+  pc<-apply(M, 2, sum)
+  t<-(pf%*%t(pc))/sum(M)
+  x2<-sum(((M-t)^2)/t)
+  gl<-(nrow(M)-1)*(ncol(M)-1)
+  pvalor<-pchisq(x2,gl,lower.tail = F)
+  x2t<-qchisq(0.05,gl,lower.tail = F)
+  cat("H0=Independencia",fill=T)
+  return(list(x2=x2,x2t=x2t,pvalor=pvalor))
+}
+chisq.test(M)
+chi2(M)
+```
+
+# Pregunta 3 (5 pts)
+
+Usando la información del https://www.worldometers.info/coronavirus/, calcule la correlación para el total de muertes por millón (Deaths/1M pop) con el total de casos por millón (Tot Cases/1M pop), por separado para los países de Sur América y Europa. Comente los valores encontrados y la diferencia. 
+
+## Solución  
+
+```{r}
+library(rvest)
+library(dplyr)
+info<-read_html("https://www.worldometers.info/coronavirus/")
+bd<-html_table(info)[[1]]
+bd<-bd[!is.na(bd[,1]),] # solo países
+#correlación para el total de muertes por millón (Deaths/1M pop) con el total de casos por millón (Tot Cases/1M pop), por separado para los países de Sur América y Europa. Comente los valores encontrados y la diferencia. 
+bd$m<-as.numeric(gsub(",","",bd$`Deaths/1M pop`))
+bd$c <-as.numeric(gsub(",","",bd$`Tot Cases/1M pop`))
+unique(bd$Continent)
+bd %>% filter(Continent=="Europe") %>% select(m,c) %>% na.omit()%>% cor()
+
+bd %>% filter(Continent=="South America") %>% select(m,c) %>% na.omit()%>% cor()
+```
+
+# Pregunta 4 (5 pts)
+
+Del enlace: https://www.dismac.com.bo/lo-que-te-regalarias-si-fueras-ni-no.html arme una base de datos utilizando las primeras 2 páginas que contenga las siguientes variables:
+  + Identificador 
+  + Descripción
+  + Precio actual
+
+Con los precios obtenidos realice un diagrama de caja. 
+
+## Solución
+
+```{r}
+library(rvest)
+library(xml2)
+www1<-"https://www.dismac.com.bo/lo-que-te-regalarias-si-fueras-ni-o.html?p=1"
+www2<-"https://www.dismac.com.bo/lo-que-te-regalarias-si-fueras-ni-o.html?p=2"
+bd1<-read_html(www1)
+bd2<-read_html(www2)
+#página 1
+id1<-bd1 %>% html_nodes(".value") %>% html_text2()
+price1<-bd1 %>% html_nodes(".price-now") %>% html_text2()
+titulo1<-bd1 %>% html_nodes(".product-item-name") %>% html_text2()
+df1<-data.frame(titulo=titulo1[9:28],price=price1,id=id1)
+#página 2
+id2<-bd2 %>% html_nodes(".value") %>% html_text2()
+
+price2<-bd2 %>% html_nodes(".price-now") %>% html_text2()
+price2ext<-bd2 %>% html_nodes(".bundle-price") %>% html_text2()
+titulo2<-bd2 %>% html_nodes(".product-item-name") %>% html_text2()
+
+df2<-data.frame(titulo=titulo2[9:28],price=c(price2[1:8],#1:8
+     price2ext[1],#9
+     price2[9:13],#10:14 
+     price2ext[2],#15
+     price2[14:18]),#16:20
+     id=id2)
+####
+df<-rbind(df1,df2)
+df$price<-gsub("Bs.","",df$price)
+df$price<-gsub("Ahora:.","",df$price)
+df$price<-gsub(",","",df$price)
+df$price<-gsub(". ",".",df$price)
+df$price
+boxplot(as.numeric(df$price))
+```

@@ -1,0 +1,177 @@
+---
+title: "LABORATORIO 1"
+subtitle: "DATOS MASIVOS 1"
+author: "Nicolás Molina Gonzalez"
+date: "2023-04-13"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rvest)
+library(dplyr)
+library(xml2)
+library(knitr)
+```
+
+# Pregunta 1 (5 pts)
+
+Escribir el codigo en R para los siguientes casos:
+
+  * (1pt) 
+
+$$\sum_{i=10}^{40}{\left(\frac{2^i}{i}+\frac{3^i}{i^2} \right)}$$
+
+#### RESPUESTA
+
+```{r}
+suma <- 0
+for(i in 10:40){
+  suma <- suma + (2^i)/i + (3^i)/(i*i)
+}
+suma
+```
+
+* (1pt) Crear una matriz de $4*5$ que contengan valores aleatorios de una uniforme con $a=0, b=10$
+
+#### RESPUESTA
+```{r}
+matriz_unif <- array(runif(20, 0, 10), c(4,5))
+matriz_unif
+```
+
+ * (1pt) Calcular     
+
+$$\sum_{i=1}^{20}{\sum_{j=2}^5{\frac{i^3}{2+ij}}}$$
+
+#### RESPUESTA
+```{r}
+sumd <- 0
+for(i in 1:20){
+  for(j in 2:5){
+    sumd <- sumd + (i^3)/(2 + i * j)
+  }
+}
+sumd
+```
+
+  * (2pts) Crear una funcion que dado un vector numerico devuelva el coeficiente de variacion y el coeficiente de asimetria de Pearson y Fisher.
+
+#### RESPUESTA
+```{r}
+fun1 <-function(x){
+  cv1 <- sd(x)/mean(x)
+  p_f <- (mean(x^3) - 3 * mean(x) * sd(x) * sd(x) - (mean(x))^3) / (sd(x)^3)
+  return(list(coef_var = cv1, Pear_Fish = p_f))
+}
+
+resultado <- fun1(1:10)
+resultado
+```
+### Comentario: -1, falta el coeficiente de Pearson
+
+4/5
+
+# Pregunta 2 (5 pts)
+
+ * Desarrolle una funciÃ³n en R que realice la prueba $\chi^2$ de Pearson, siguiendo a https://es.wikipedia.org/wiki/Prueba_%CF%87%C2%B2_de_Pearson
+  * Verifique el resultado de la funciÃ³n creada con el comando  chisq.test de R para la tabla: 
+  
+```{r,echo=FALSE}
+M <- as.table(rbind(c(762, 327, 468), c(484, 239, 477)))
+dimnames(M) <- list(gender = c("F", "M"),
+                    party = c("Democrat","Independent", "Republican"))
+M
+```
+
+#### RESPUESTA
+```{r}
+fun2 <-function(x){
+  E <- sum(x) / length(x)
+  chi_2 <- sum(((x - E)^2) / E)
+  return(list(estad_chi_2 = chi_2, GL = length(x) - 1, chi_crit = qchisq(.95, length(x)-1, lower.tail = TRUE)))
+}
+resultado <- fun2(M)
+resultado
+prueba <- chisq.test(M)
+prueba
+```
+
+### Comentario: Incorrecto
+
+0/5
+
+# Pregunta 3 (5 pts)
+
+Usando la informaciÃ³n del https://www.worldometers.info/coronavirus/, calcule la correlaciÃ³n para el total de muertes por millÃ³n (Deaths/1M pop) con el total de casos por millÃ³n (Tot Cases/1M pop), por separado para los paÃ­ses de Sur AmÃ©rica y Europa. Comente los valores encontrados y la diferencia. 
+
+#### RESPUESTA
+```{r}
+www <- "https://www.worldometers.info/coronavirus/#main_table"
+bd <- read_html(www)
+bdt <- bd %>% html_table()
+t1 <- bdt[[1]]
+t2 <- bdt[[2]]
+t3 <- bdt[[3]]
+
+t1d <- as.data.frame(t1)
+
+t_actual <- t1d[-c(1:8, 240:247),] %>% select(c(2,11,12,16)) %>% filter(Continent == "Europe")
+t_europa <- t_actual
+kable(head(t_europa))
+kable(tail(t_europa))
+
+X <- as.numeric(gsub(",", "", t_europa[,2]))
+Y <- as.numeric(gsub(",", "", t_europa$`Deaths/1M pop`))
+cor(X,Y, use = "complete.obs")
+
+t_actual <- t1d[-c(1:8, 240:247),] %>% select(c(2,11,12,16)) %>% filter(Continent == "South America")
+t_sudamerica <- t_actual
+kable(head(t_sudamerica))
+kable(tail(t_sudamerica))
+
+X <- as.numeric(gsub(",", "", t_sudamerica[,2]))
+Y <- as.numeric(gsub(",", "", t_sudamerica$`Deaths/1M pop`))
+cor(X,Y, use = "complete.obs")
+```
+
+CONCLUSIONES: Las correlaciones son bajas entre las variables seleccionadas y además la correlación es negativa en el caso de auropa, es decir si una de las variables tiende a crecer, la otra tiende a decrecer. En el caso de Sudamérica la relación es directa.
+
+5/5
+
+# Pregunta 4 (5 pts)
+
+Del enlace: https://www.dismac.com.bo/lo-que-te-regalarias-si-fueras-ni-no.html arme una base de datos utilizando las primeras 2 pÃ¡ginas que contenga las siguientes variables:
+  + Identificador 
+  + DescripciÃ³n
+  + Precio actual
+
+Con los precios obtenidos realice un diagrama de caja. 
+
+#### RESPUESTA
+```{r}
+www1 <- "https://www.dismac.com.bo/lo-que-te-regalarias-si-fueras-ni-no.html?p=1"
+www2 <- "https://www.dismac.com.bo/lo-que-te-regalarias-si-fueras-ni-no.html?p=2"
+
+dis1 <- read_html(www1)
+dis2 <- read_html(www2)
+
+id = dis1 %>% html_nodes(".value") %>% html_text2()
+desc = dis1 %>% html_nodes(".product-item-name") %>% html_text2()
+precio = dis1 %>% html_nodes(".int") %>% html_text2()
+
+id = dis2 %>% html_nodes(".value") %>% html_text2()
+desc = dis2 %>% html_nodes(".product-item-name") %>% html_text2()
+precio = dis2 %>% html_nodes(".int") %>% html_text2()
+
+```
+
+Comentario: Incompleto
+
+0/5
+
+### Total 
+
+4+0+5+0=9/20

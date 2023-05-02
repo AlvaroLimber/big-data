@@ -1,0 +1,90 @@
+---
+title: "**Primer Laboratorio**"
+subtitle: "Análisis Masivo de Datos"
+author: "Cristian Antonio Guallpa Lipa"
+data: "13 de abril 2023"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+  + Las respuestas deben estar en un solo documento, este puede ser un archivo .R (script) o rmd (rmarkdown)
+  + Cuando termine envíe su respuesta al correo achirinog@fcpn.edu.bo
+  + El examen termina a las 15:40
+
+# Pregunta 1 (5 pts)
+
+Escribir el código en R para los siguientes casos:
+
+  * (1pt) 
+
+$$\sum_{i=10}^{40}{\left(\frac{2^i}{i}+\frac{3^i}{i^2} \right)}$$
+
+```{r}
+# sumatoria simple
+resultado <- sapply(10:40, function(x) {(2^x/x)+(3^x/x^2)})
+sum(resultado)
+```
+
+  * (1pt) Crear una matriz de $4*5$ que contengan valores aleatorios de una uniforme con $a=0, b=10$
+  
+```{r}
+m<- matrix(c(1:20),4,5)
+m <- matrix( ruif(20, min = 0, max = 10), nrow = 4,ncol=5)
+#no corre 
+```
+
+  * (1pt) Calcular     
+
+$$\sum_{i=1}^{20}{\sum_{j=2}^5{\frac{i^3}{2+ij}}}$$
+```{r}
+# sumatoria encadenada
+sum(sapply(1:20, function(x){sapply(1:5, function(y) {x^3/(2+(x*y))})}) )
+# no iguala al resultado esperado
+```
+
+  * (2pts) Crear una función que dado un vector numérico devuelva el coeficiente de variación y el coeficiente de asimetría de Pearson y Fisher.
+
+
+# coeficiente de asimetria de pearson
+$$A[s]=\frac{E[\bar{x}]-mo}{v(\bar{x})}$$
+# coeficiente de simetria de fisher
+$$A[s]=\frac{\sum_{i=1}^{n}({x_i-E[\bar{x}]})^3*n_i}{N*v(\bar{x})^3}$$
+
+### Comentario: incompleto 2/5
+
+# Pregunta 2 (5 pts)
+
+ * Desarrolle una función en R que realice la prueba $\chi^2$ de Pearson, siguiendo a https://es.wikipedia.org/wiki/Prueba_%CF%87%C2%B2_de_Pearson
+  * Verifique el resultado de la función creada con el comando  chisq.test de R para la tabla: 
+  
+```{r,echo=FALSE}
+M <- as.table(rbind(c(762, 327, 468), c(484, 239, 477)))
+dimnames(M) <- list(gender = c("F", "M"),
+                    party = c("Democrat","Independent", "Republican"))
+M
+chisq.test(M)
+M/sum(M)
+
+```
+
+### Comentario: Incompleto 0/5
+
+# Pregunta 3 (5 pts)
+
+Usando la información del https://www.worldometers.info/coronavirus/, calcule la correlación para el total de muertes por millón (Deaths/1M pop) con el total de casos por millón (Tot Cases/1M pop), por separado para los países de Sur América y Europa. Comente los valores encontrados y la diferencia. 
+
+# Pregunta 4 (5 pts)
+
+Del enlace: https://www.dismac.com.bo/lo-que-te-regalarias-si-fueras-ni-no.html arme una base de datos utilizando las primeras 2 páginas que contenga las siguientes variables:
+  + Identificador 
+  + Descripción
+  + Precio actual
+
+Con los precios obtenidos realice un diagrama de caja. 
+
+### Total: 2+0+0+0=2/20
