@@ -421,7 +421,93 @@ bdmun %>% arrange(desc(nombre.municipio)) %>% head()
 bdmun %>% arrange(cc,mas.ipsp) %>% select(cc,mas.ipsp) %>% head()
 ```
 
+## Transformación
 
+Se refiere a cambios en las variables o la base de datos. A nivel de las variables las transformaciones más comunes son:
+
+  - Adecuación de formatos
+  - Limpieza de texto
+  - Creación de variables
+  - Valores atípicos
+  - Valores perdidos
+
+### Adecuación de formatos
+
+Se refiere a cambiar la clase o el tipo de formato de una variable.
+
+```{r}
+library(haven)
+library(dplyr)
+load("data/cs12.RData")
+names(cs12v_8)
+class(cs12v_8$p04)
+aux<-as.factor(cs12v_8$p04)
+mean(cs12v_8$p04, na.rm = T)
+mean(aux, na.rm = T)
+```
+
+  - as.factor, as.character, as.numeric
+
+```{r}
+cs12v_8<-cs12v_8 %>% mutate(p04_1=as.factor(p04))
+class(cs12v_8$p04_1)
+
+cs12v_8<-cs12v_8 %>% mutate(p04_1=as.factor(p04),
+       p04_2=as_factor(p04),
+       p04_3=as.character(p04))
+
+cs12v_8 %>% select(p04,p04_1,p04_2,p04_3) %>% head()
+
+cs12v_8 %>% filter(p04==1) %>% group_by(p03) %>% count() 
+
+cs12v_8 %>% filter(p04_2=="Si") %>% group_by(p03) %>% count() 
+```
+
+### Creación de variables
+
+Existen diferentes alternativas, estas normalmente deben estar orientadas a un indicador o para facilitar el manejo de alguna variable.
+
+```{r}
+cs12v_8 %>% mutate(aux=1) %>% summarise(sum(aux))
+
+cs12v_8<-cs12v_8 %>% mutate(revoque=(p04==1)) 
+cs12v_8$revoque
+class(cs12v_8$revoque)
+cs12v_8 %>% summarise(mean(revoque,na.rm = T))
+cs12v_8 %>% summarise(sum(revoque,na.rm = T))
+cs12v_8$urbrur
+
+cs12v_8<-cs12v_8 %>% mutate(rural=urbrur==2)
+
+cs12v_8 %>% filter(rural==T) %>% summarise(mean(revoque,na.rm = T))
+
+class(cs12v_8$p07)
+
+cs12v_8<-cs12v_8 %>% mutate(agua=(p07==1|p07==2|p07==4),
+                   agua2=( p07 %in% c(1,2,4)))
+
+cs12v_8 %>% mutate(agua=(p07==1|p07==2|p07==4),
+                   agua2=(p07 %in% c(1,2,4))) %>% summarise(mean(agua,na.rm = T), mean(agua2,na.rm = T))
+
+mean(cs12v_8$agua, na.rm = T)
+mean(cs12v_8$agua2, na.rm = T)
+
+prop.table(table(cs12v_8$p07))[c(1,2,4)]
+sum(prop.table(table(cs12v_8$p07))[c(1,2,4)])
+```
+
+Tarea: 
+
+  - Tasa de masculinidad por hogar y provincia. (promedio a nivel de hogar) 
+  - Promedio de la tasa de dependencia. (<18,>=60)
+  - Promedio de viviendas con revoque y agua mejorada según el sexo del jefe/a del hogar. (inner. left. right, merge)
+  - En el caso de las preguntas p04 y p07 a que se deben los NA. Son valores perdidos, son valores no aplica, etc.
+  
+
+
+### Limpieza de texto
+### Valores atípicos
+### Valores perdidos
 
 ### Pivot, Reshape
 ### Uniendo bases de datos
