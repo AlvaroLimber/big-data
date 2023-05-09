@@ -502,16 +502,82 @@ Tarea:
   - Promedio de la tasa de dependencia. (<18,>=60)
   - Promedio de viviendas con revoque y agua mejorada según el sexo del jefe/a del hogar. (inner. left. right, merge)
   - En el caso de las preguntas p04 y p07 a que se deben los NA. Son valores perdidos, son valores no aplica, etc.
-  
 
-
-### Limpieza de texto
-### Valores atípicos
 ### Valores perdidos
 
-### Pivot, Reshape
+```{r}
+x1<-c(1,2,3,NA,NA,4,5)
+x2<-c(NA,2,NA,8,9,4,5)
+bd<-data.frame(x1,x2)
+bd
+mean(bd$x1,na.rm=T)
+mean(bd$x2,na.rm=T)
+colMeans(bd,na.rm = T)
+bd2<-na.omit(bd)
+colMeans(bd2)
+
+mx1<-mean(bd$x1,na.rm=T)
+mx2<-mean(bd$x2,na.rm=T)
+
+bd$x1[is.na(bd$x1)]<-mx1
+bd$x2[is.na(bd$x2)]<-mx2
+
+bd0<-bd
+bd0
+colMeans(bd)
+```
+
+### Valores atípicos
+
+  - Hacer la diferencia entre valores atípicos univariantes de los multivariantes
+  - En lo univariante
+    + Transformación logarítmica
+    + Partición de la base de datos (**estables**, atípicos). Se puede utilizar los quantiles (p99, p01) existen otros algoritmos (bacon)
+  - En lo multivariante
+    + Componentes principales (detección). Primer componente.
+    + Métodos de agrupamiento (kcenter, "k")
+
 ### Uniendo bases de datos
 
+La unión de bases de datos se puede entender en dos direcciones:
+
+  + Se añaden casos (filas)
+  + Se añaden variables (columnas)
+
+```{r}
+rm(list = ls())
+library(dplyr)
+load("data/cs12.RData")
+cs12p<-cs12p_8 %>% bind_rows(cs12p_9) #apilar, append
+names(cs12p)
+cs12p %>% group_by(desc_idep,p24) %>% summarise(mean(p25),max(p25))
+
+aux<-cs12p %>% group_by(p25) %>% count()
+
+plot(aux$p25,aux$n,type = "h")
+```
+
+Para apilar las bases de datos, se debe asegurar que estas tengan las mismas variables e información adicional.
+
+Promedio de viviendas con revoque y agua mejorada según el sexo del jefe/a del hogar. (inner. left. right, merge)
+
+```{r}
+library(haven)
+aux1<-cs12p_8 %>% select(llave, p23, p24) %>% filter(p23 == 1)
+length(unique(aux1$llave))
+# explorar las llaves repetidas
+# filtrar las llaves que no son únicas
+
+table(cs12v_8$p01)
+v8<-cs12v_8 %>% filter(p01 %in% 1:5)
+table(v8$p02)
+v8 %>% filter(p02%in% c(0,3,4,5)) %>% View()
+v8<-v8 %>% filter(p02 %in% 0:2)
+table(is.na(v8$p03))
+```
+
+
+### Pivot, Reshape
 
 
 ### Identificando relaciones
