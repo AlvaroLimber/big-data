@@ -562,20 +562,73 @@ Para apilar las bases de datos, se debe asegurar que estas tengan las mismas var
 Promedio de viviendas con revoque y agua mejorada según el sexo del jefe/a del hogar. (inner. left. right, merge)
 
 ```{r}
+rm(list = ls())
 library(haven)
-aux1<-cs12p_8 %>% select(llave, p23, p24) %>% filter(p23 == 1)
+library(dplyr)
+load("data/cs12.RData")
+
+aux1<-cs12p_8 %>% filter(p23 == 1 & p01%in% 1:5) %>% select(llave, p23, p24)
 length(unique(aux1$llave))
+
+if(3==2){
 # explorar las llaves repetidas
-# filtrar las llaves que no son únicas
+rep(c(1:3),c(2,5,1))
+repetidos<-aux1 %>% group_by(llave) %>% count() %>% filter(n>1)
+cs12p_8 %>% filter(llave=="080202002608") %>% View()
+cs12p_8 %>% filter(llave %in% repetidos$llave) %>% group_by(p01) %>% count()
+}
 
 table(cs12v_8$p01)
 v8<-cs12v_8 %>% filter(p01 %in% 1:5)
 table(v8$p02)
-v8 %>% filter(p02%in% c(0,3,4,5)) %>% View()
-v8<-v8 %>% filter(p02 %in% 0:2)
-table(is.na(v8$p03))
+
+v8<-v8 %>% filter(p02 %in% 0:1)
+table(is.na(v8$p04))
+
+length(unique(v8$llave))
+v8 %>% filter(is.na(p04)) %>% View()
+
+v8 %>% filter(is.na(p04)) %>% group_by(p01) %>% count()
+v8 %>% filter(is.na(p04)) %>% group_by(p02) %>% count()
+# asegurarse que el nombre de las variables para la unión sean los mismo y del mismo tipo
+bj1<-aux1 %>% inner_join(v8) # 1:1
+bj2<-aux1 %>% left_join(v8) # izquierda
+bj3<-aux1 %>% right_join(v8) # derecha
+bj4<-aux1 %>% full_join(v8) # todos contra todos
+bj5<-aux1 %>% full_join(v8 %>% rename(id=llave)) # todos contra todos
+library(labelled)
+library(xtable)
+
+bj1 %>% mutate(revoque=(p04==1)) %>% group_by(Sexo=p24) %>% summarise(Indicador=mean(revoque)*100)
+
+bj1 %>% mutate(revoque=(p04==1)) %>% group_by(Sexo=to_factor(p24)) %>% summarise(Indicador=mean(revoque)*100)
+
+bj1 %>% mutate(revoque=(p04==1)) %>% group_by(Sexo=to_factor(p24)) %>% summarise(Indicador=mean(revoque)*100) %>% xtable()
+
+bj1 %>% mutate(revoque=(p04==1),aux=1) %>% group_by(Sexo=to_factor(p24)) %>% summarise(Indicador=mean(revoque)*100, Viviendas=n()) %>% mutate(Porcentaje=(Viviendas/sum(Viviendas))*100)
 ```
 
+## Muestreo, estimación, error estándar y confiabilidad
+
+Según el tipo de estudio se deben calcular los indicadores tomando en cuenta el diseño detrás de la base de datos; cuando es un censo normalmente trabajamos con parámetros y los errores presentes tienden a ser "errores de no muestreo" o cobertura. De manera similar en los registros administrativos. En el caso de bases de datos de encuestas por muestreo *probabilístico* se cuenta adicionalmente con los errores de muestreo y se trabajan con estimaciones.
+
+### Diseño muestral
+
+$$P(.)=f(MM(U),X(Y))$$
+
+Una función de probabilidades
+
+### Estimación
+
+$$t_y=\sum_U y_k$$
+$$\mu_y=\frac{t_y}{N}$$
+Horvits-Thompson
+
+$$\hat{t}_y=\sum_s \frac{y_k}{\pi_k}$$
+Donde $\pi_k$ es la probabilidad de selección del individuo $k-ésimo$, que es dada por el diseño muestral.
+
+
+### Rendimiento
 
 ### Pivot, Reshape
 
@@ -600,10 +653,7 @@ Test de independencia $/chi^2$
 Cuanti vs cuanti: Lo más útil y práctico es hacer una **correlación**, sin embargo, lo que se estudia es una relación lineal, además son relaciones *casuales*
 
 
-## Muestreo, estimación, error estándar y confiabilidad
-### Diseño muestral
-### Estimación
-### Rendimiento
+
 ## Transformación
 ### Adecuación de formatos
 ### Limpieza de texto
